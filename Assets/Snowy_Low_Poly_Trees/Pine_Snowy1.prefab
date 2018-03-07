@@ -21,12 +21,12 @@ GameObject:
   - component: {fileID: 4000012848826022}
   - component: {fileID: 33000013540128620}
   - component: {fileID: 23000012730164974}
-  - component: {fileID: 64000011215493686}
   - component: {fileID: 54898705726544532}
   - component: {fileID: 114072633644952600}
+  - component: {fileID: 136617794145528282}
   m_Layer: 0
   m_Name: Pine_Snowy1
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,13 +37,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011914158716}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: -1.6887716}
+  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
+  m_LocalPosition: {x: 243.48438, y: 6.488039, z: 18.957134}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
 --- !u!23 &23000012730164974
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -102,20 +102,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 124
   m_CollisionDetection: 2
---- !u!64 &64000011215493686
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011914158716}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300006, guid: e6ec39770b6dbe04f9cbd7ea19e0c7ef, type: 3}
 --- !u!114 &114072633644952600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -129,3 +115,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 0
   speed: 0
+  obstacleScript: {fileID: 0}
+--- !u!136 &136617794145528282
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011914158716}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.3320017
+  m_Height: 3.8918357
+  m_Direction: 1
+  m_Center: {x: 0.17534545, y: 3.54, z: 0.10374522}

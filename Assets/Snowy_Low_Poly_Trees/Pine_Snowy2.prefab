@@ -21,12 +21,12 @@ GameObject:
   - component: {fileID: 4000012197449570}
   - component: {fileID: 33000010824592920}
   - component: {fileID: 23000010215965848}
-  - component: {fileID: 64000011916849430}
   - component: {fileID: 54100135886654646}
   - component: {fileID: 114222794606758176}
+  - component: {fileID: 136393185921496936}
   m_Layer: 0
   m_Name: Pine_Snowy2
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,13 +37,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011147454354}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: -0.092222534}
+  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
+  m_LocalPosition: {x: 253.47278, y: 0.83058643, z: 21.06516}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
 --- !u!23 &23000010215965848
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -102,20 +102,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 124
   m_CollisionDetection: 2
---- !u!64 &64000011916849430
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011147454354}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300008, guid: e6ec39770b6dbe04f9cbd7ea19e0c7ef, type: 3}
 --- !u!114 &114222794606758176
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -129,3 +115,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 0
   speed: 0
+  obstacleScript: {fileID: 0}
+--- !u!136 &136393185921496936
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011147454354}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.5660188
+  m_Height: 4.1366606
+  m_Direction: 1
+  m_Center: {x: 0.06472958, y: 3.3840816, z: 0.029813528}
