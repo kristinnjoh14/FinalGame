@@ -888,8 +888,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 45
-  m_Center: {x: -34.836617, y: -27.644907, z: 0}
+  m_Radius: 25
+  m_Center: {x: -16.6, y: -10.1, z: 0}
 --- !u!65 &889977619
 BoxCollider:
   m_ObjectHideFlags: 0
