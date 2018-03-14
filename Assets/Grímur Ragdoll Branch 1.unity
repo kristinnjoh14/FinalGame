@@ -631,6 +631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   replacement: {fileID: 925708013}
   original: {fileID: 824553475}
+  planeController: {fileID: 249091120}
 --- !u!1 &878281427
 GameObject:
   m_ObjectHideFlags: 0
