@@ -8,6 +8,7 @@ public class SkierMovement : MonoBehaviour {
 	public Text retryText;
 	public float bodyTilt;
 	public float maxSpeed;
+	public bool onGround;
     private bool lost;
 	private float orgZrot;
 	private Quaternion orgRotation;
@@ -35,6 +36,7 @@ public class SkierMovement : MonoBehaviour {
 		rb = GetComponent<Rigidbody> ();
 		orgRotation = rb.rotation;
 		orgZrot = orgRotation.eulerAngles.z;
+		onGround = true;
 	}
 
     private void OnTriggerEnter(Collider other)
