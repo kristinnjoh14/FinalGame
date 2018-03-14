@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SkierMovement : MonoBehaviour {
+    public GameController gc;
 	public float speed;
 	public Text retryText;
 	public float bodyTilt;
@@ -59,8 +60,29 @@ public class SkierMovement : MonoBehaviour {
         }
     }
 
+
+    private void addZForceLeft(float deltaVel)
+    {
+        if (rb.velocity.z > 0)
+        {
+            deltaVel = 2 * maxSpeed - deltaVel;
+        }
+        rb.AddForce(0, 0, -speed * 0.5f * deltaVel);
+    }
+    private void addZForceRight(float deltaVel)
+    {
+        if (rb.velocity.z < 0)
+        {
+            deltaVel = 2 * maxSpeed - deltaVel;
+        }
+        rb.AddForce(0, 0, speed * 0.5f * deltaVel);
+    }
+
     // Update is called once per frame
     void Update () {
+
+
+        bool isInput = false;
 
         if (!lost)
         {
@@ -110,26 +132,55 @@ public class SkierMovement : MonoBehaviour {
         }
 
         float deltaVel = maxSpeed - rb.velocity.magnitude;
+
+
+
 		if (Application.isEditor) {
-			if (Input.GetKey (KeyCode.A)) {
-				if (rb.velocity.z > 0) {
-					deltaVel = 2*maxSpeed - deltaVel;
-				}
-				rb.AddForce (0, 0, -speed*0.5f*deltaVel);
-				rb.rotation = Quaternion.Euler (-bodyTilt, 0, orgZrot);
-			} else if (Input.GetKey (KeyCode.D)) {
-				if (rb.velocity.z < 0) {
-					deltaVel = 2*maxSpeed - deltaVel;
-				}
-				rb.AddForce (0, 0, speed*0.5f*deltaVel);
-				rb.rotation = Quaternion.Euler (bodyTilt, 0, orgZrot);
-			} else if (Input.GetKeyUp (KeyCode.D) || Input.GetKeyUp (KeyCode.A)) {
+
+            if (Input.GetKey (KeyCode.A) || ( gc.LeftButtonPressed && !gc.useTiltControls ) ) {
+                addZForceLeft(deltaVel);
+                isInput = true;
+
+			} else if (Input.GetKey (KeyCode.D) || (gc.RightButtonPressed && !gc.useTiltControls) ) {
+                addZForceRight(deltaVel);
+                isInput = true;
+                //rb.rotation = Quaternion.Euler (bodyTilt, 0, orgZrot);
+
+            }
+            /*else if (Input.GetKeyUp (KeyCode.D) || Input.GetKeyUp (KeyCode.A)) {
 				rb.rotation = orgRotation;
-			}
+			}*/
+
 		} else {
-			rb.AddForce (0, 0, Input.acceleration.x * speed * deltaVel);
-			rb.rotation = Quaternion.Euler (bodyTilt*Input.acceleration.x, 0, orgZrot);
-		}
+            if (gc.useTiltControls)
+            {
+                rb.AddForce(0, 0, Input.acceleration.x * speed * deltaVel);
+                //rb.rotation = Quaternion.Euler(bodyTilt * Input.acceleration.x, 0, orgZrot);
+            } else
+            {
+                if (gc.LeftButtonPressed)
+                {
+                    addZForceLeft(deltaVel);
+                    isInput = true;
+                }
+
+                if (gc.RightButtonPressed)
+                {
+                    addZForceRight(deltaVel);
+                    isInput = true;
+                }
+
+            }
+            
+        }
+
+        if (!isInput)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z - (rb.velocity.z * 0.1f * Time.deltaTime ) );
+        }
+
+        rb.rotation = Quaternion.Euler(bodyTilt * (rb.velocity.z / maxSpeed), 0, orgZrot);
+
 		//Debug.Log (deltaVel);
 	}
 
