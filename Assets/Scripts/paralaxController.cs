@@ -24,6 +24,10 @@ public class paralaxController : MonoBehaviour {
     private float xCoord = 0;
     public Material magicMaterial;
 
+    public AnimationCurve lightnessCurve;
+
+    public AnimationCurve scaleFuck;
+
     // Use this for initialization
     void Start () {
 		
@@ -72,11 +76,18 @@ public class paralaxController : MonoBehaviour {
                 
                 float _yCoord = yOffset + (float)y;
 
+                float yFactor = (float)(textureHeight - y) / (float)textureHeight;
 
+                
 
                 float sample = Mathf.PerlinNoise(_xCoord / scale, _yCoord / scale);
 
-                pix[y * textureWidth + x] = new Color(sample, .74f, sample);
+                
+                pix[y * textureWidth + x] = new Color(
+                                         /*red*/          (Mathf.Clamp(sample, .2f,   .4f))     * lightnessCurve.Evaluate(yFactor),
+                                         /*green*/        (Mathf.Clamp(sample, 0.5f,    1f))     * lightnessCurve.Evaluate(yFactor),
+                                         /*blue*/         (Mathf.Clamp(sample, 0.1f, .5f))     * lightnessCurve.Evaluate(yFactor)
+                                            );
                 x++;
             }
             y++;
