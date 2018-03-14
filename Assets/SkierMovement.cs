@@ -17,6 +17,7 @@ public class SkierMovement : MonoBehaviour {
 		rb = GetComponent<Rigidbody> ();
 		orgRotation = rb.rotation;
 		orgZrot = orgRotation.eulerAngles.z;
+        retryText = GameObject.FindGameObjectWithTag("RetryText").GetComponent<Text>();
 	}
 	
 	// Update is called once per frame
@@ -46,8 +47,10 @@ public class SkierMovement : MonoBehaviour {
 	}
 
 	//Called upon collision, stops time and sets retry text
-	public void OnCollisionEnter () {
-		Time.timeScale = 0;
-		retryText.text = "Tap to retry";
+	public void OnCollisionEnter (Collision coll) {
+        if(coll.gameObject.tag.Equals("Tree"))
+        {
+            retryText.text = "Tap to retry";
+        }
 	}
 }
