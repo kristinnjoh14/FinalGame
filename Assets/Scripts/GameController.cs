@@ -5,18 +5,80 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
-	public float score;
+    public float score;
 
-	private Text scoreBoard;
-	void Awake () {
-		Application.targetFrameRate = 60;
-	}
-	// Use this for initializatin
-	void Start () {
-		score = 0;
-		scoreBoard = GameObject.FindGameObjectWithTag ("ScoreCounter").GetComponent<Text> ();
-	}
-	
+    public bool useTiltControls = true;
+
+    public bool LeftButtonPressed;
+    public bool RightButtonPressed;
+
+    public GameObject settingsContainer; 
+
+
+    /// <summary>
+    /// events for the button presses.???
+    /// </summary>
+    public void leftButtonPointerDown()
+    {
+        this.LeftButtonPressed = true;
+    }
+    public void leftButtonPointerUp()
+    {
+        this.LeftButtonPressed = false;
+    }
+    public void rightButtonPointerDown()
+    {
+        this.RightButtonPressed = true;
+    }
+    public void rightButtonPointerUp()
+    {
+        this.RightButtonPressed = false;
+    }
+
+    /// <summary>
+    /// event for when the cog-wheel is clicked. 
+    /// </summary>
+    public void cogWheelClicked()
+    {
+        //show the settings panel
+        settingsContainer.SetActive(true);
+    }
+    /// <summary>
+    /// this is an event that happens when the user clicks outside of the settingspanel.
+    /// </summary>
+    public void outsideOfSettingsMenuClicked()
+    {
+        settingsContainer.SetActive(false);
+        //hide the settings panel
+    }
+    /// <summary>
+    /// set the control scheme.
+    /// </summary>
+    /// <param name="value"></param>
+    public void setUseButtonControls(bool value)
+    {
+        useTiltControls = !value;
+    }
+
+
+
+
+
+    private Text scoreBoard;
+    void Awake() {
+        Application.targetFrameRate = 60;
+    }
+    // Use this for initializatin
+    void Start() {
+        score = 0;
+        scoreBoard = GameObject.FindGameObjectWithTag("ScoreCounter").GetComponent<Text>();
+    }
+
+    void SettingsButtonClicked()
+    {
+        
+    }
+
 	// Update is called once per frame
 	void Update () {
 		score += Time.deltaTime;
