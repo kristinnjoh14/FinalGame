@@ -23,7 +23,8 @@ public class ShootBolt : MonoBehaviour {
             newObject.transform.position = transform.position + -rb.transform.right;
 
             newObject.transform.LookAt(newObject.transform, -transform.right);
-            newObject.GetComponent<Rigidbody>().AddForce(-transform.right * shootForce);
+            Vector3 temp = new Vector3(-1,0,0);
+            newObject.GetComponent<Rigidbody>().AddForce(temp * shootForce);
             Destroy(newObject, 3.0f);
         }
 	}
