@@ -8,6 +8,7 @@ TagManager:
   - ScoreCounter
   - Tree
   - treeFilter
+  - Projectile
   layers:
   - Default
   - TransparentFX
