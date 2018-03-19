@@ -2,8 +2,6 @@
 
 public class BoltCollision : MonoBehaviour {
 
-    public Rigidbody rb;
-
 	// Use this for initialization
 	void Start ()
     {
