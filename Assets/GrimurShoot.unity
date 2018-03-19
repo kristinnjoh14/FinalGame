@@ -787,7 +787,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 956769974
+  randomSeed: 1128434444
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -8165,7 +8165,8 @@ MonoBehaviour:
   key: s
   rb: {fileID: 889977612}
   ammunition: {fileID: 1400517385013240, guid: 3fb37619b3f569d41b3826586252f01f, type: 2}
-  shootForce: 250
+  shootForce: 400
+  cooldownTimer: 0.5
 --- !u!1 &951633218
 GameObject:
   m_ObjectHideFlags: 0
