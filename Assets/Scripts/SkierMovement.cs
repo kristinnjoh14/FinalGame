@@ -146,33 +146,38 @@ public class SkierMovement : MonoBehaviour {
             if (Input.GetKey (KeyCode.A) || ( gc.LeftButtonPressed && !gc.useTiltControls ) ) {
                 addZForceLeft(deltaVel);
                 isInput = true;
+				rb.rotation = Quaternion.Euler (-bodyTilt, 0, orgZrot);
 
 			} else if (Input.GetKey (KeyCode.D) || (gc.RightButtonPressed && !gc.useTiltControls) ) {
                 addZForceRight(deltaVel);
                 isInput = true;
-                //rb.rotation = Quaternion.Euler (bodyTilt, 0, orgZrot);
+                rb.rotation = Quaternion.Euler (bodyTilt, 0, orgZrot);
 
             }
-            /*else if (Input.GetKeyUp (KeyCode.D) || Input.GetKeyUp (KeyCode.A)) {
+            else if (Input.GetKeyUp (KeyCode.D) || Input.GetKeyUp (KeyCode.A)) {
 				rb.rotation = orgRotation;
-			}*/
+			}
 
 		} else {
             if (gc.useTiltControls)
             {
                 rb.AddForce(0, 0, Input.acceleration.x * speed * deltaVel);
+				rb.rotation = Quaternion.Euler (bodyTilt*Input.acceleration.x, 0, 0);
             } else
             {
+				rb.rotation = orgRotation;
                 if (gc.LeftButtonPressed)
                 {
                     addZForceLeft(deltaVel);
                     isInput = true;
+					rb.rotation = Quaternion.Euler (-bodyTilt, 0, orgZrot);
                 }
 
                 if (gc.RightButtonPressed)
                 {
                     addZForceRight(deltaVel);
                     isInput = true;
+					rb.rotation = Quaternion.Euler (bodyTilt, 0, orgZrot);
                 }
 
             }
@@ -184,7 +189,8 @@ public class SkierMovement : MonoBehaviour {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z - (rb.velocity.z * 0.1f * Time.deltaTime ) );
         }
 
-        rb.rotation = Quaternion.Euler(bodyTilt * (rb.velocity.z / maxSpeed), 0, orgZrot);
+		//Rotation by current speed
+        //rb.rotation = Quaternion.Euler(bodyTilt * (rb.velocity.z / maxSpeed), 0, orgZrot);
 
 		//Debug.Log (deltaVel);
 	}

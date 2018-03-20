@@ -46,8 +46,7 @@ public class SkiSoundManager : MonoBehaviour {
 	}
 
 	public void hardTurnSound (float deltaVel) {
-		hardTurnSource.volume = 1-deltaVel;
-		Debug.Log (deltaVel);
+		hardTurnSource.volume = 1-0.7f*deltaVel;
 		if (!hardTurnSource.isPlaying) {
 			hardTurnSource.time = 0;
 			hardTurnSource.Play ();

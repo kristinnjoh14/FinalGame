@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 15303, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.6
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -281,7 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 35
-  acceleration: 0.5
+  acceleration: 0.6
   planes:
   - {fileID: 671253829}
   - {fileID: 1967956486}
@@ -8126,7 +8126,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  fovChange: 5
+  fovChange: 50
   minTimeScale: 0.1
   nearList: []
 --- !u!135 &889977618
@@ -8139,8 +8139,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 45
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 35
+  m_Center: {x: -15, y: 0, z: 0}
 --- !u!65 &889977619
 BoxCollider:
   m_ObjectHideFlags: 0
