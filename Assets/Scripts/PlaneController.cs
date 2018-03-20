@@ -57,7 +57,8 @@ public class PlaneController : MonoBehaviour {
 		//Moves the right plane left or vice versa depending on where the player is
 		for (int j = 0; j < 3; j++) {
             //if the player's position on the z axis is 
-			if (player.transform.position.z + planeWidth/2 < oldZCenter && planes[0].transform.GetChild (j).transform.position.z > oldZCenter) {
+			if (player.transform.position.z + planeWidth/2 < oldZCenter && 
+				planes[0].transform.GetChild (j).transform.position.z > oldZCenter) {
 
                 Vector3 temp = planes [0].transform.GetChild (j).transform.position;
 				temp.z -= 3*planeWidth;
@@ -67,10 +68,12 @@ public class PlaneController : MonoBehaviour {
 				planes [1].transform.GetChild (j).transform.position = temp;
 				oldZCenter -= planeWidth;
 
-                treekiller.transform.position = new Vector3(treekiller.transform.position.x, treekiller.transform.position.y, treekiller.transform.position.z - planeWidth);
+                treekiller.transform.position = new Vector3(treekiller.transform.position.x, 
+					treekiller.transform.position.y, treekiller.transform.position.z - planeWidth);
 
             }
-            else if (player.transform.position.z - planeWidth/2 > oldZCenter && planes[0].transform.GetChild (j).transform.position.z < oldZCenter) {
+            else if (player.transform.position.z - planeWidth/2 > oldZCenter && 
+				planes[0].transform.GetChild (j).transform.position.z < oldZCenter) {
 
                 Vector3 temp = planes [0].transform.GetChild (j).transform.position;
 				temp.z += 3*planeWidth;
@@ -80,7 +83,8 @@ public class PlaneController : MonoBehaviour {
 				planes [1].transform.GetChild (j).transform.position = temp;
 				oldZCenter += planeWidth;
 
-                treekiller.transform.position = new Vector3(treekiller.transform.position.x, treekiller.transform.position.y, treekiller.transform.position.z + planeWidth);
+                treekiller.transform.position = new Vector3(treekiller.transform.position.x, 
+					treekiller.transform.position.y, treekiller.transform.position.z + planeWidth);
 
             }
         }

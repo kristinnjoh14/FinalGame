@@ -26,7 +26,7 @@ public class paralaxController : MonoBehaviour {
 
     public AnimationCurve lightnessCurve;
 
-    public AnimationCurve scaleFuck;
+	public AnimationCurve whiteOut;
 
     // Use this for initialization
     void Start () {
@@ -82,11 +82,15 @@ public class paralaxController : MonoBehaviour {
 
                 float sample = Mathf.PerlinNoise(_xCoord / scale, _yCoord / scale);
 
+				Color white = new Color (1f, 1f, 1f);
+
+				//float other = 
+
                 
                 pix[y * textureWidth + x] = new Color(
-                                         /*red*/          (Mathf.Clamp(sample, .2f,   .4f))     * lightnessCurve.Evaluate(yFactor),
-                                         /*green*/        (Mathf.Clamp(sample, 0.5f,    1f))     * lightnessCurve.Evaluate(yFactor),
-                                         /*blue*/         (Mathf.Clamp(sample, 0.1f, .5f))     * lightnessCurve.Evaluate(yFactor)
+					/*red*/         (Mathf.Clamp(0.85f-sample, 0f,   1f)),//     * lightnessCurve.Evaluate(yFactor),
+					/*green*/       (Mathf.Clamp(1f, 0.5f,    1f)),//     * lightnessCurve.Evaluate(yFactor),
+					/*blue*/        (Mathf.Clamp(1f-sample, 0f, 1f))//     * lightnessCurve.Evaluate(yFactor)
                                             );
                 x++;
             }

@@ -14,6 +14,7 @@ public class SkierMovement : MonoBehaviour {
 	private float orgZrot;
 	private Quaternion orgRotation;
 	private Rigidbody rb;
+	private SkiSoundManager sm;
     /// <summary>
     /// How close should a tree be until we start slowing our dude down
     /// </summary>
@@ -38,6 +39,7 @@ public class SkierMovement : MonoBehaviour {
 		orgRotation = rb.rotation;
 		orgZrot = orgRotation.eulerAngles.z;
 		onGround = true;
+		sm = GetComponent<SkiSoundManager> ();
 	}
 
     private void OnTriggerEnter(Collider other)
@@ -65,8 +67,9 @@ public class SkierMovement : MonoBehaviour {
 
     private void addZForceLeft(float deltaVel)
     {
-        if (rb.velocity.z > 0)
+        if (rb.velocity.z > 0)	//If movement is opposite velocity, force is greater proportional to how fast you are going
         {
+			sm.hardTurnSound (deltaVel/maxSpeed);
             deltaVel = 2 * maxSpeed - deltaVel;
         }
         rb.AddForce(0, 0, -speed * 0.5f * deltaVel);
@@ -75,6 +78,7 @@ public class SkierMovement : MonoBehaviour {
     {
         if (rb.velocity.z < 0)
         {
+			sm.hardTurnSound (deltaVel/maxSpeed);
             deltaVel = 2 * maxSpeed - deltaVel;
         }
         rb.AddForce(0, 0, speed * 0.5f * deltaVel);
@@ -157,7 +161,6 @@ public class SkierMovement : MonoBehaviour {
             if (gc.useTiltControls)
             {
                 rb.AddForce(0, 0, Input.acceleration.x * speed * deltaVel);
-                //rb.rotation = Quaternion.Euler(bodyTilt * Input.acceleration.x, 0, orgZrot);
             } else
             {
                 if (gc.LeftButtonPressed)
