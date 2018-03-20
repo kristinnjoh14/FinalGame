@@ -37,6 +37,7 @@ public class SkiSoundManager : MonoBehaviour {
 		hardTurnSource.volume -= 0.5f*Time.deltaTime;
 		audioSource.pitch = Time.timeScale;
 		hardTurnSource.pitch = Time.timeScale;
+        windSource.pitch = Time.timeScale;
 		if (skier.onGround) {
 			//audioSource.volume = skierrb.velocity.magnitude / 10;
 			//audioSource.pitch = Mathf.Abs (skierrb.velocity.magnitude) / 50;
@@ -48,7 +49,7 @@ public class SkiSoundManager : MonoBehaviour {
 	public void hardTurnSound (float deltaVel) {
 		hardTurnSource.volume = 1-0.7f*deltaVel;
 		if (!hardTurnSource.isPlaying) {
-			hardTurnSource.time = 0;
+			hardTurnSource.time = 0f;
 			hardTurnSource.Play ();
 		}
 	}
