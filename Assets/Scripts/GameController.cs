@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
 
     public GameObject settingsContainer; 
 
+	private static GameController instance;
 
     /// <summary>
     /// events for the button presses.???
@@ -67,11 +68,20 @@ public class GameController : MonoBehaviour {
     private Text scoreBoard;
     void Awake() {
         Application.targetFrameRate = 60;
+		if (instance == null) {
+			instance = this;
+		} else {
+			DestroyObject (gameObject);
+		}
+		DontDestroyOnLoad (this);
     }
     // Use this for initializatin
     void Start() {
         score = 0;
         scoreBoard = GameObject.FindGameObjectWithTag("ScoreCounter").GetComponent<Text>();
+		cogWheelClicked ();
+		settingsContainer = GameObject.FindGameObjectWithTag ("SettingsContainer");
+		outsideOfSettingsMenuClicked ();
     }
 
     void SettingsButtonClicked()
@@ -85,8 +95,9 @@ public class GameController : MonoBehaviour {
 		scoreBoard.text = score.ToString ("F2");
 		if (Time.timeScale == 0) {
 			FindObjectOfType <ObstacleScript> ().enabled = false;
-			if (Input.GetKeyDown (KeyCode.Space) || Input.touchCount > 0) {
+			if (Input.GetKeyDown (KeyCode.Space) || Input.touchCount != 0) {
 				Time.timeScale = 1;
+				GameObject.FindGameObjectWithTag ("RetryScreen").GetComponent<Text> ().text = "";
 				SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 			}
 		}

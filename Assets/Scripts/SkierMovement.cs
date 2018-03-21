@@ -9,6 +9,8 @@ public class SkierMovement : MonoBehaviour {
 	public Text retryText;
 	public float bodyTilt;
 	public float maxSpeed;
+
+	public float maxSpeedDiff;		//Maximum difference between "current" scrollspeed and actual scrollspeed (Current keeps being incremented)
 	public bool onGround;
     private bool lost;
 	private float orgZrot;
@@ -25,6 +27,8 @@ public class SkierMovement : MonoBehaviour {
     public AnimationCurve sloMoCurve;
     private float baseFov = 70f;
     public float fovChange = 10f;
+
+	private PlaneController pc;
     
     /// <summary>
     /// The minimum time scale.
@@ -40,6 +44,9 @@ public class SkierMovement : MonoBehaviour {
 		orgZrot = orgRotation.eulerAngles.z;
 		onGround = true;
 		sm = GetComponent<SkiSoundManager> ();
+		gc = FindObjectOfType<GameController> ();
+		pc = FindObjectOfType<PlaneController> ();
+		retryText = GameObject.FindGameObjectWithTag ("RetryScreen").GetComponent<Text> ();
 	}
 
     private void OnTriggerEnter(Collider other)
@@ -161,8 +168,17 @@ public class SkierMovement : MonoBehaviour {
 		} else {
             if (gc.useTiltControls)
             {
-                rb.AddForce(0, 0, Input.acceleration.x * speed * deltaVel);
-				rb.rotation = Quaternion.Euler (bodyTilt*Input.acceleration.x, 0, 0);
+				if ((rb.velocity.z > 0 && Input.acceleration.x < 0) || (rb.velocity.z < 0 && Input.acceleration.x > 0))	//If movement is opposite velocity, force is greater proportional to how fast you are going
+				{
+					sm.hardTurnSound (deltaVel/maxSpeed);
+					//deltaVel = 2 * maxSpeed - deltaVel;
+				}
+				rb.AddForce(0, 0, Input.acceleration.x * speed * deltaVel);
+				pc.scrollSpeed += Input.acceleration.z*Time.deltaTime*speed;
+				if(pc.scrollSpeed < (pc.referenceSpeed - maxSpeedDiff)) {
+					pc.scrollSpeed = pc.referenceSpeed - maxSpeedDiff;
+				}
+				rb.rotation = Quaternion.Euler (bodyTilt*Input.acceleration.x, 0, -bodyTilt*Input.acceleration.z);
             } else
             {
 				rb.rotation = orgRotation;
@@ -189,7 +205,7 @@ public class SkierMovement : MonoBehaviour {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z - (rb.velocity.z * 0.1f * Time.deltaTime ) );
         }
 
-		//Rotation by current speed
+		//Rotation by current speed, TODO: reenable, but rotate about Y axis once model is in
         //rb.rotation = Quaternion.Euler(bodyTilt * (rb.velocity.z / maxSpeed), 0, orgZrot);
 
 		//Debug.Log (deltaVel);
@@ -200,10 +216,11 @@ public class SkierMovement : MonoBehaviour {
 
 	//Called upon collision, stops time and sets retry text
 	public void OnCollisionEnter (Collision c2) {
-        /*Debug.Log(Vector3.Distance(c2.transform.position, transform.position));
-		Time.timeScale = 0;
-        lost = true;
-		retryText.text = "Tap to retry";
-        */
+        //Debug.Log(Vector3.Distance(c2.transform.position, transform.position));
+		if (c2.gameObject.CompareTag ("Tree")) {
+			Time.timeScale = 0;
+	        lost = true;
+			retryText.text = "Tap to retry";
+		}
 	}
 }

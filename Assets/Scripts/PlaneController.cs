@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlaneController : MonoBehaviour {
 	public float scrollSpeed;
+	public float referenceSpeed;
 	public float acceleration;
 	public GameObject[] planes = new GameObject[2];
 	public float planeWidth;
@@ -18,6 +19,7 @@ public class PlaneController : MonoBehaviour {
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		oldZCenter = 0;
+		referenceSpeed = scrollSpeed;
         //set the further-away plane as the active one.
         activePlane = planes[1];
         treekiller.transform.position = new Vector3(treekiller.transform.position.x, transform.position.y, oldZCenter);
@@ -33,6 +35,7 @@ public class PlaneController : MonoBehaviour {
 	public void movePlanes () {
 		//Apply acceleration and move planes
 		scrollSpeed += acceleration * Time.deltaTime;
+		referenceSpeed += acceleration * Time.deltaTime;
 		for (int i = 0; i < 2; i++) {
 			Vector3 tmp = planes [i].transform.position;
 			tmp.x += scrollSpeed * Time.deltaTime;
