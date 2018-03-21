@@ -35,6 +35,7 @@ public class SkiSoundManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		hardTurnSource.volume -= 0.5f*Time.deltaTime;
+		windSource.volume = Camera.main.fieldOfView / 150;
 		audioSource.pitch = Time.timeScale;
 		hardTurnSource.pitch = Time.timeScale;
         windSource.pitch = Time.timeScale;

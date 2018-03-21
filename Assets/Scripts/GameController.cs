@@ -14,6 +14,8 @@ public class GameController : MonoBehaviour {
 
     public GameObject settingsContainer; 
 
+	public Quaternion deviceOrgRot;
+
 	private static GameController instance;
 
     /// <summary>
@@ -82,6 +84,9 @@ public class GameController : MonoBehaviour {
 		cogWheelClicked ();
 		settingsContainer = GameObject.FindGameObjectWithTag ("SettingsContainer");
 		outsideOfSettingsMenuClicked ();
+		if(!Application.isEditor) {
+			deviceOrgRot = Quaternion.Euler (Input.acceleration.x, Input.acceleration.y, Input.acceleration.z);
+		}
     }
 
     void SettingsButtonClicked()
@@ -98,6 +103,7 @@ public class GameController : MonoBehaviour {
 			if (Input.GetKeyDown (KeyCode.Space) || Input.touchCount != 0) {
 				Time.timeScale = 1;
 				GameObject.FindGameObjectWithTag ("RetryScreen").GetComponent<Text> ().text = "";
+				score = 0;
 				SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 			}
 		}

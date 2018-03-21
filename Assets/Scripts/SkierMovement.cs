@@ -94,30 +94,26 @@ public class SkierMovement : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-
         bool isInput = false;
+		float tiltX = Input.acceleration.x - gc.deviceOrgRot.x;
+		float tiltZ = Input.acceleration.z - gc.deviceOrgRot.z;
 
         if (!lost)
         {
             /* <!-- THIS IS THE PART WHERE THE SLOW MOTION EFFECT IS DONE!!! --> */
             GameObject nearestTree = null;
             float minimumDistance = float.MaxValue;
-
-
-            
+			
             //nearlist is a list of only gameobjects with the tag 'Tree'
             foreach (Collider item in nearList)
             {
-
                 float dist = Vector3.Distance(this.transform.position, item.transform.position);
                 if (dist < minimumDistance)
                 {
                     nearestTree = item.gameObject;
                     minimumDistance = dist;
                 }
-
             }
-
 
             if (nearestTree != null)
             {
@@ -126,18 +122,19 @@ public class SkierMovement : MonoBehaviour {
                 if(minimumDistance < slowDownProximity)
                 {
                     float curveValue = sloMoCurve.Evaluate(minimumDistance / slowDownProximity);
-                    
 
                     float dee = (1f - minTimeScale) * curveValue;
                     dee += minTimeScale;
                     Time.timeScale = dee;
                     Time.fixedDeltaTime = Time.timeScale * 0.01f;
-                }   else
-                {
+                } 
+				else 
+				{
                     Time.timeScale = 1f;
                 }
             
-            } else
+            } 
+			else
             {
                 Time.timeScale = 1;
             }
@@ -168,17 +165,19 @@ public class SkierMovement : MonoBehaviour {
 		} else {
             if (gc.useTiltControls)
             {
-				if ((rb.velocity.z > 0 && Input.acceleration.x < 0) || (rb.velocity.z < 0 && Input.acceleration.x > 0))	//If movement is opposite velocity, force is greater proportional to how fast you are going
+				if ((rb.velocity.z > 0 && tiltX < 0) || (rb.velocity.z < 0 && tiltX > 0))	//If movement is opposite velocity, force is greater proportional to how fast you are going
 				{
 					sm.hardTurnSound (deltaVel/maxSpeed);
 					//deltaVel = 2 * maxSpeed - deltaVel;
 				}
-				rb.AddForce(0, 0, Input.acceleration.x * speed * deltaVel);
-				pc.scrollSpeed += Input.acceleration.z*Time.deltaTime*speed;
+				rb.AddForce(0, 0, tiltX * speed * deltaVel);
+				pc.scrollSpeed -= tiltZ*Time.deltaTime*speed;
 				if(pc.scrollSpeed < (pc.referenceSpeed - maxSpeedDiff)) {
 					pc.scrollSpeed = pc.referenceSpeed - maxSpeedDiff;
 				}
-				rb.rotation = Quaternion.Euler (bodyTilt*Input.acceleration.x, 0, -bodyTilt*Input.acceleration.z);
+				rb.rotation = Quaternion.Euler (bodyTilt*tiltX, 0, -bodyTilt*tiltZ);
+				Camera.main.fieldOfView -= (tiltZ*Time.deltaTime*speed);
+				Camera.main.fieldOfView = Mathf.Clamp (Camera.main.fieldOfView, 60, 100);
             } else
             {
 				rb.rotation = orgRotation;

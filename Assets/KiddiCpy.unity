@@ -280,9 +280,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39e118cc9f619459fa10192badeddc68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollSpeed: 35
+  scrollSpeed: 40
   referenceSpeed: 0
-  acceleration: 0.6
+  acceleration: 0.7
   planes:
   - {fileID: 671253829}
   - {fileID: 1967956486}
@@ -8107,7 +8107,7 @@ MonoBehaviour:
   retryText: {fileID: 1503403212}
   bodyTilt: 25
   maxSpeed: 100
-  maxSpeedDiff: 40
+  maxSpeedDiff: 35
   onGround: 0
   slowDownProximity: 15
   sloMoCurve:
