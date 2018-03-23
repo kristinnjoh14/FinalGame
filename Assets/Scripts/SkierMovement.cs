@@ -71,7 +71,6 @@ public class SkierMovement : MonoBehaviour {
         }
     }
 
-
     private void addZForceLeft(float deltaVel)
     {
         if (rb.velocity.z > 0)	//If movement is opposite velocity, force is greater proportional to how fast you are going
@@ -81,6 +80,7 @@ public class SkierMovement : MonoBehaviour {
         }
         rb.AddForce(0, 0, -speed * 0.5f * deltaVel);
     }
+
     private void addZForceRight(float deltaVel)
     {
         if (rb.velocity.z < 0)
@@ -95,8 +95,8 @@ public class SkierMovement : MonoBehaviour {
     void Update () {
 
         bool isInput = false;
-		float tiltX = Input.acceleration.x - gc.deviceOrgRot.x;
-		float tiltZ = Input.acceleration.z - gc.deviceOrgRot.z;
+		float tiltX = gc.AdjustedAccelerometer.x;
+		float tiltZ = gc.AdjustedAccelerometer.z;
 
         if (!lost)
         {
@@ -171,12 +171,12 @@ public class SkierMovement : MonoBehaviour {
 					//deltaVel = 2 * maxSpeed - deltaVel;
 				}
 				rb.AddForce(0, 0, tiltX * speed * deltaVel);
-				pc.scrollSpeed -= tiltZ*Time.deltaTime*speed;
+				pc.scrollSpeed += tiltZ*Time.deltaTime*speed;
 				if(pc.scrollSpeed < (pc.referenceSpeed - maxSpeedDiff)) {
 					pc.scrollSpeed = pc.referenceSpeed - maxSpeedDiff;
 				}
-				rb.rotation = Quaternion.Euler (bodyTilt*tiltX, 0, -bodyTilt*tiltZ);
-				Camera.main.fieldOfView -= (tiltZ*Time.deltaTime*speed);
+				rb.rotation = Quaternion.Euler (bodyTilt*tiltX, 0, bodyTilt*tiltZ);
+				Camera.main.fieldOfView += (tiltZ*Time.deltaTime*speed);
 				Camera.main.fieldOfView = Mathf.Clamp (Camera.main.fieldOfView, 60, 100);
             } else
             {
