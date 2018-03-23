@@ -98,7 +98,7 @@ public class SkierMovement : MonoBehaviour {
 		float tiltX = gc.AdjustedAccelerometer.x;
 		float tiltZ = gc.AdjustedAccelerometer.z;
 
-        if (!lost)
+		if (!lost && !gc.settingsContainer.activeSelf)
         {
             /* <!-- THIS IS THE PART WHERE THE SLOW MOTION EFFECT IS DONE!!! --> */
             GameObject nearestTree = null;
