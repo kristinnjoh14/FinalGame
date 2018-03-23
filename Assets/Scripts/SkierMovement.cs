@@ -138,15 +138,13 @@ public class SkierMovement : MonoBehaviour {
             {
                 Time.timeScale = 1;
             }
-            /* <!-- ABOVE IS THE PART WHERE THE TREE-DODGE SLOW MOTUION EFFECT --> */
+            /* <!-- ABOVE IS THE PART WHERE THE TREE-DODGE SLOW MOTION EFFECT HAPPENS --> */
         }
 
         float deltaVel = maxSpeed - rb.velocity.magnitude;
 
-
-
-		if (Application.isEditor) {
-
+		//Dev buttons for testing in editor
+		if (Application.isEditor) {	
             if (Input.GetKey (KeyCode.A) || ( gc.LeftButtonPressed && !gc.useTiltControls ) ) {
                 addZForceLeft(deltaVel);
                 isInput = true;
@@ -156,19 +154,16 @@ public class SkierMovement : MonoBehaviour {
                 addZForceRight(deltaVel);
                 isInput = true;
                 rb.rotation = Quaternion.Euler (bodyTilt, 0, orgZrot);
-
             }
             else if (Input.GetKeyUp (KeyCode.D) || Input.GetKeyUp (KeyCode.A)) {
 				rb.rotation = orgRotation;
 			}
-
+		//Actual device controls
 		} else {
             if (gc.useTiltControls)
-            {
-				if ((rb.velocity.z > 0 && tiltX < 0) || (rb.velocity.z < 0 && tiltX > 0))	//If movement is opposite velocity, force is greater proportional to how fast you are going
-				{
-					sm.hardTurnSound (deltaVel/maxSpeed);
-					//deltaVel = 2 * maxSpeed - deltaVel;
+            {		//Tilt controls
+				if ((rb.velocity.z > 0 && tiltX < 0) || (rb.velocity.z < 0 && tiltX > 0)) {	//If movement is opposite velocity, force is greater proportional to how fast you are going
+					sm.hardTurnSound (deltaVel / maxSpeed);
 				}
 				rb.AddForce(0, 0, tiltX * speed * deltaVel);
 				pc.scrollSpeed += tiltZ*Time.deltaTime*speed;
@@ -179,24 +174,23 @@ public class SkierMovement : MonoBehaviour {
 				Camera.main.fieldOfView += (tiltZ*Time.deltaTime*speed);
 				Camera.main.fieldOfView = Mathf.Clamp (Camera.main.fieldOfView, 60, 100);
             } else
-            {
+            {		//Tap controls
 				rb.rotation = orgRotation;
                 if (gc.LeftButtonPressed)
                 {
                     addZForceLeft(deltaVel);
                     isInput = true;
-					rb.rotation = Quaternion.Euler (-bodyTilt, 0, orgZrot);
+					//rb.rotation = Quaternion.Euler (-bodyTilt, 0, orgZrot);
                 }
 
                 if (gc.RightButtonPressed)
                 {
                     addZForceRight(deltaVel);
                     isInput = true;
-					rb.rotation = Quaternion.Euler (bodyTilt, 0, orgZrot);
+					//rb.rotation = Quaternion.Euler (bodyTilt, 0, orgZrot);
                 }
-
+				rb.rotation = Quaternion.Euler(bodyTilt * (rb.velocity.z / maxSpeed), 0, orgZrot);
             }
-            
         }
 
         if (!isInput)

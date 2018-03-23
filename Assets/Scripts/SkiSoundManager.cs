@@ -12,6 +12,7 @@ public class SkiSoundManager : MonoBehaviour {
 	private AudioSource hardTurnSource;
 	private AudioSource windSource;
 	private Rigidbody skierrb;
+	private bool turningHard = false;
 	// Use this for initialization
 	void Start () {
 		skier = GetComponent<SkierMovement> ();
@@ -39,19 +40,22 @@ public class SkiSoundManager : MonoBehaviour {
 		audioSource.pitch = Time.timeScale;
 		hardTurnSource.pitch = Time.timeScale;
         windSource.pitch = Time.timeScale;
-		if (skier.onGround) {
-			//audioSource.volume = skierrb.velocity.magnitude / 10;
-			//audioSource.pitch = Mathf.Abs (skierrb.velocity.magnitude) / 50;
-		} else {
-			audioSource.volume -= 7*Time.deltaTime;
+		if (!turningHard)  {
+			hardTurnSource.volume -= 0.7f*Time.deltaTime;
+			if (hardTurnSource.volume < 0.05f) {
+				hardTurnSource.Stop ();
+			}
 		}
 	}
-
+		
 	public void hardTurnSound (float deltaVel) {
 		hardTurnSource.volume = 1-0.7f*deltaVel;
-		if (!hardTurnSource.isPlaying) {
-			hardTurnSource.time = 0f;
+		if (!hardTurnSource.isPlaying && deltaVel <= 0.95f) {
+			hardTurnSource.time = 0;//Random.value/2;
 			hardTurnSource.Play ();
+			turningHard = true;
+		} else if (deltaVel > 0.95f) {
+			turningHard = false;
 		}
 	}
 }
