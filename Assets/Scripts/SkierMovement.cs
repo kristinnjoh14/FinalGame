@@ -148,15 +148,15 @@ public class SkierMovement : MonoBehaviour {
             if (Input.GetKey (KeyCode.A) || ( gc.LeftButtonPressed && !gc.useTiltControls ) ) {
                 addZForceLeft(deltaVel);
                 isInput = true;
-				rb.rotation = Quaternion.Euler (-bodyTilt, 0, orgZrot);
+				//rb.rotation = Quaternion.Euler (-bodyTilt, 0, orgZrot);
 
 			} else if (Input.GetKey (KeyCode.D) || (gc.RightButtonPressed && !gc.useTiltControls) ) {
                 addZForceRight(deltaVel);
                 isInput = true;
-                rb.rotation = Quaternion.Euler (bodyTilt, 0, orgZrot);
+                //rb.rotation = Quaternion.Euler (bodyTilt, 0, orgZrot);
             }
             else if (Input.GetKeyUp (KeyCode.D) || Input.GetKeyUp (KeyCode.A)) {
-				rb.rotation = orgRotation;
+				//rb.rotation = orgRotation;
 			}
 		//Actual device controls
 		} else {
@@ -175,7 +175,7 @@ public class SkierMovement : MonoBehaviour {
 				Camera.main.fieldOfView = Mathf.Clamp (Camera.main.fieldOfView, 60, 100);
             } else
             {		//Tap controls
-				rb.rotation = orgRotation;
+				//rb.rotation = orgRotation;
                 if (gc.LeftButtonPressed)
                 {
                     addZForceLeft(deltaVel);
@@ -189,7 +189,7 @@ public class SkierMovement : MonoBehaviour {
                     isInput = true;
 					//rb.rotation = Quaternion.Euler (bodyTilt, 0, orgZrot);
                 }
-				rb.rotation = Quaternion.Euler(bodyTilt * (rb.velocity.z / maxSpeed), 0, orgZrot);
+				//rb.rotation = Quaternion.Euler(bodyTilt * (rb.velocity.z / maxSpeed), 0, orgZrot);
             }
         }
 
