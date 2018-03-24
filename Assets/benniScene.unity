@@ -175,9 +175,9 @@ HingeJoint:
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: -0.0008894403, y: 0.0075272694, z: -0.0050164773}
-  m_UseSpring: 0
+  m_UseSpring: 1
   m_Spring:
-    spring: 0
+    spring: 50
     damper: 0
     targetPosition: 0
   m_UseMotor: 0
@@ -539,9 +539,9 @@ HingeJoint:
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: -5.8207654e-11, y: 0.008384119, z: 0}
-  m_UseSpring: 0
+  m_UseSpring: 1
   m_Spring:
-    spring: 0
+    spring: 40
     damper: 0
     targetPosition: 0
   m_UseMotor: 0
@@ -862,7 +862,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.07
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -871,7 +871,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 207.94653
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1180,9 +1180,9 @@ HingeJoint:
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: -0.000946237, y: 0.0075272694, z: 0.0049914685}
-  m_UseSpring: 0
+  m_UseSpring: 1
   m_Spring:
-    spring: 0
+    spring: 50
     damper: 0
     targetPosition: 0
   m_UseMotor: 0
@@ -1344,9 +1344,9 @@ HingeJoint:
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0.006847799, z: 0.0000000071304376}
-  m_UseSpring: 0
+  m_UseSpring: 1
   m_Spring:
-    spring: 0
+    spring: 100
     damper: 0
     targetPosition: 0
   m_UseMotor: 0
@@ -1772,8 +1772,8 @@ HingeJoint:
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
-    min: -10
-    max: 10
+    min: -79.13801
+    max: 85.83388
     bounciness: 1
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -10338,9 +10338,9 @@ HingeJoint:
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0.0000000037252899, y: 0.008384117, z: 0}
-  m_UseSpring: 0
+  m_UseSpring: 1
   m_Spring:
-    spring: 0
+    spring: 40
     damper: 0
     targetPosition: 0
   m_UseMotor: 0
@@ -10707,9 +10707,9 @@ HingeJoint:
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: -0.0000000014842956, y: 0.0068478025, z: 0.0000000026193447}
-  m_UseSpring: 0
+  m_UseSpring: 1
   m_Spring:
-    spring: 0
+    spring: 100
     damper: 0
     targetPosition: 0
   m_UseMotor: 0
