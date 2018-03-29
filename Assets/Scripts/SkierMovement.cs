@@ -215,5 +215,5 @@ public class SkierMovement : MonoBehaviour {
 	        lost = true;
 			retryText.text = "Tap to retry";
 		}
-	}
+    }
 }

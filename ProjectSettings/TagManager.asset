@@ -9,6 +9,8 @@ TagManager:
   - Tree
   - treeFilter
   - SettingsContainer
+  - Coin
+  - CoinController
   layers:
   - Default
   - TransparentFX
