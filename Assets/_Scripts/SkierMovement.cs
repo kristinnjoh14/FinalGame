@@ -78,7 +78,7 @@ public class SkierMovement : MonoBehaviour {
 			sm.hardTurnSound (deltaVel/maxSpeed);
             deltaVel = 2 * maxSpeed - deltaVel;
         }
-        rb.AddForce(0, 0, -speed * 0.5f * deltaVel);
+        rb.AddForce(0, 0, -speed * deltaVel);
     }
 
     private void addZForceRight(float deltaVel)
@@ -88,14 +88,14 @@ public class SkierMovement : MonoBehaviour {
 			sm.hardTurnSound (deltaVel/maxSpeed);
             deltaVel = 2 * maxSpeed - deltaVel;
         }
-        rb.AddForce(0, 0, speed * 0.5f * deltaVel);
+        rb.AddForce(0, 0, speed * deltaVel);
     }
 
     // Update is called once per frame
     void Update () {
         bool isInput = false;
-		float tiltX = gc.AdjustedAccelerometer.x;
-		float tiltZ = gc.AdjustedAccelerometer.z;
+		float tiltX = Mathf.Clamp(gc.AdjustedAccelerometer.x, -1, 1);
+		//float tiltZ = gc.AdjustedAccelerometer.z;
 
 		//Tree stuff if not paused
 		if (!lost && !gc.settingsContainer.activeSelf)
@@ -148,16 +148,16 @@ public class SkierMovement : MonoBehaviour {
             if (Input.GetKey (KeyCode.A) || ( gc.LeftButtonPressed && !gc.useTiltControls ) ) {
                 addZForceLeft(deltaVel);
                 isInput = true;
-				//rb.rotation = Quaternion.Euler (-bodyTilt, 0, orgZrot);
-
+				bodyTilt -= Time.deltaTime * 100;
 			} else if (Input.GetKey (KeyCode.D) || (gc.RightButtonPressed && !gc.useTiltControls) ) {
                 addZForceRight(deltaVel);
                 isInput = true;
-                //rb.rotation = Quaternion.Euler (bodyTilt, 0, orgZrot);
+				bodyTilt += Time.deltaTime * 100;
             }
-            else if (Input.GetKeyUp (KeyCode.D) || Input.GetKeyUp (KeyCode.A)) {
-				//rb.rotation = orgRotation;
-			}
+            /*else if (Input.GetKeyUp (KeyCode.D) || Input.GetKeyUp (KeyCode.A)) {
+				rb.rotation = orgRotation;
+			}*/
+			bodyTilt -= 0.09f * bodyTilt;
 		//Actual device controls
 		} else {
             if (gc.useTiltControls)
@@ -166,37 +166,34 @@ public class SkierMovement : MonoBehaviour {
 					sm.hardTurnSound (deltaVel / maxSpeed);
 				}
 				rb.AddForce(0, 0, tiltX * speed * deltaVel);
-				pc.scrollSpeed += tiltZ*Time.deltaTime*speed;
+				/*pc.scrollSpeed += tiltZ*Time.deltaTime*speed;
 				if(pc.scrollSpeed < (pc.referenceSpeed - maxSpeedDiff)) {
 					pc.scrollSpeed = pc.referenceSpeed - maxSpeedDiff;
 				}
 				rb.rotation = Quaternion.Euler (bodyTilt*tiltX, 0, bodyTilt*tiltZ);
 				Camera.main.fieldOfView += (tiltZ*Time.deltaTime*speed);
-				Camera.main.fieldOfView = Mathf.Clamp (Camera.main.fieldOfView, 60, 100);
+				Camera.main.fieldOfView = Mathf.Clamp (Camera.main.fieldOfView, 60, 100);*/
             } else
             {		//Tap controls
 				//rb.rotation = orgRotation;
-                if (gc.LeftButtonPressed)
-                {
-                    addZForceLeft(deltaVel);
-                    isInput = true;
-					//rb.rotation = Quaternion.Euler (-bodyTilt, 0, orgZrot);
-                }
-
-                if (gc.RightButtonPressed)
-                {
-                    addZForceRight(deltaVel);
-                    isInput = true;
-					//rb.rotation = Quaternion.Euler (bodyTilt, 0, orgZrot);
-                }
-				//rb.rotation = Quaternion.Euler(bodyTilt * (rb.velocity.z / maxSpeed), 0, orgZrot);
+				if (gc.LeftButtonPressed) {
+					addZForceLeft (deltaVel);
+					isInput = true;
+					bodyTilt -= Time.deltaTime * 100;
+				} else if (gc.RightButtonPressed) {
+					addZForceRight (deltaVel);
+					isInput = true;
+					bodyTilt += Time.deltaTime * 100;
+				}
+				bodyTilt -= 0.09f * bodyTilt;
             }
         }
 
-		//Rotation by current speed, TODO: reenable, but rotate about Y axis once model is in
-        //rb.rotation = Quaternion.Euler(bodyTilt * (rb.velocity.z / maxSpeed), 0, orgZrot);
+	}
 
-		//Debug.Log (deltaVel);
+	public void FixedUpdate () {
+		//Rotation by current speed, TODO: reenable, but rotate about Y axis once model is in
+		rb.rotation = Quaternion.Euler(bodyTilt, Mathf.Rad2Deg * (rb.velocity.z / maxSpeed), orgZrot);
 	}
 
 

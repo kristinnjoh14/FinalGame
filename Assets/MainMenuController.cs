@@ -20,15 +20,15 @@ public class MainMenuController : MonoBehaviour {
 
 	//Loads main scene
 	public void startGame () {
-		//SceneManager.LoadScene (getMainScene ());
+		SceneManager.LoadScene ("KiddiModel");
 	}
 
 	//Gets main scene TODO:set to correct scene before deployment
 	/*public Scene getMainScene () {
-		SceneManager.GetSceneByName ("KiddiCpy");
+		SceneManager.GetSceneByName ("KiddiModel");
 	}
 
-	private void loadData () {
+	/*private void loadData () {
 		Stream stream = File.Open("MySavedGame.gamed", FileMode.Open);
 		BinaryFormatter bformatter = new BinaryFormatter();
 		bformatter.Binder = new SerializationBinder(); 

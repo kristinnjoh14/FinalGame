@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour {
 
     public GameObject settingsContainer; 
 
+	[Range(1f, 2.5f)]
+	public float inputSensitivity;
 	//public Quaternion deviceOrgRot;
 	Matrix4x4 baseMatrix = Matrix4x4.identity;
 

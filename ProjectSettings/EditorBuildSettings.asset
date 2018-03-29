@@ -6,8 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Kiddi.unity
+    path: Assets/_Scenes/Kiddi.unity
     guid: ab2fd773cb18c474fa84725e670079dd
-  - enabled: 1
-    path: Assets/KiddiCpy.unity
+  - enabled: 0
+    path: Assets/_Scenes/KiddiCpy.unity
     guid: 9cdf0a9238fe24dfbb55b23d37221dce
+  - enabled: 1
+    path: Assets/_Scenes/MainMenu.unity
+    guid: d121aa8bab46f4f98992ca4494658bad
+  - enabled: 1
+    path: Assets/_Scenes/KiddiModel.unity
+    guid: c75b33db332f94bda9a48716ae5434e8

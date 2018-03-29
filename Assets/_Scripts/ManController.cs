@@ -64,7 +64,7 @@ public class ManController : MonoBehaviour {
         foreach( Rigidbody r in rs)
         {
             Pair t = new Pair(r, r.rotation);
-            Debug.Log(t.rot);
+            //Debug.Log(t.rot);
             rbs.Add(t);
            
         }
