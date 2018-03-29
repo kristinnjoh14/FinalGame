@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 public class GameController : MonoBehaviour {
     public float score;
@@ -14,7 +17,7 @@ public class GameController : MonoBehaviour {
 
     public GameObject settingsContainer; 
 
-	public Quaternion deviceOrgRot;
+	//public Quaternion deviceOrgRot;
 	Matrix4x4 baseMatrix = Matrix4x4.identity;
 
 	private static GameController instance;
@@ -36,9 +39,9 @@ public class GameController : MonoBehaviour {
 		scoreBoard.text = score.ToString ("F2");
 		if (Time.timeScale == 0) {
 			FindObjectOfType <ObstacleScript> ().enabled = false;
-			if (saveScore ()) {
+			/*if (saveScore ()) {
 				scoreBoard.text = "New high score!\n" + score.ToString ("F2");
-			}
+			}*/
 			if (Input.GetKeyDown (KeyCode.Space) || Input.touchCount != 0) {
 				Time.timeScale = 1;
 				GameObject.FindGameObjectWithTag ("RetryScreen").GetComponent<Text> ().text = "";
@@ -126,8 +129,16 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	//TODO: determine what data to save and save it. Also, load on startup.
+	/*//TODO: determine what data to save and save it. Also, load on startup.
 	public bool saveScore () {
-		return true;
-	}
+		if (true) { //TODO: check if this is the highest score ever
+			Stream stream = File.Open("MySavedGame.gamed", FileMode.Create);
+			BinaryFormatter bformatter = new BinaryFormatter();
+			bformatter.Binder = new SerializationBinder(); 
+			Debug.Log ("Writing Information");
+			bformatter.Serialize(stream, score);
+			stream.Close();
+			return true;
+		}
+	}*/
 }
