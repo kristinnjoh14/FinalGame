@@ -9972,7 +9972,6 @@ MonoBehaviour:
   LeftButtonPressed: 0
   RightButtonPressed: 0
   settingsContainer: {fileID: 1930682521}
-  deviceOrgRot: {x: 0, y: 0, z: 0, w: 0}
 --- !u!4 &1755433174
 Transform:
   m_ObjectHideFlags: 0
