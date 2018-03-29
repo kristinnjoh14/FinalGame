@@ -45,15 +45,11 @@ public class ManController : MonoBehaviour {
     */
     void updateBodyPart(Pair p)
     {
-
-        //get rb current rotation;
+        //get rb current rotation
         Quaternion currentRotation = p.rb.rotation;
-        //find the difference btw, 
-        // diff =  currentRotation - p.rot;
-        //apply that difference as torque wrt. deltatime and factor to rigidbody
+        p.rb.AddTorque((p.rot.eulerAngles-  p.rb.rotation.eulerAngles) * Time.deltaTime);
         p.rb.rotation = Quaternion.Slerp(p.rot, currentRotation, factor);
-        ///rb.AddRelativeTorque(diff * Time.deltaTime * factor);
-
+        
     }
 
 
