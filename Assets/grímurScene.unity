@@ -1637,7 +1637,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &527895827
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1799,7 +1799,6 @@ GameObject:
   - component: {fileID: 540297451}
   - component: {fileID: 540297453}
   - component: {fileID: 540297452}
-  - component: {fileID: 540297455}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Player
@@ -1888,18 +1887,6 @@ Transform:
   m_Father: {fileID: 1431701914}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &540297455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 540297450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67a3005de922b214bae27dc8c44a2164, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scoreText: {fileID: 160987741}
 --- !u!1 &555991147
 GameObject:
   m_ObjectHideFlags: 0
@@ -6080,7 +6067,6 @@ GameObject:
   - component: {fileID: 806599412}
   - component: {fileID: 806599414}
   - component: {fileID: 806599413}
-  - component: {fileID: 806599416}
   m_Layer: 0
   m_Name: shin.r
   m_TagString: Untagged
@@ -6103,7 +6089,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &806599413
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6167,18 +6153,6 @@ Transform:
   m_Father: {fileID: 1262023015}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -3.6390002, y: 89.02801, z: -39.794003}
---- !u!114 &806599416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 806599411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67a3005de922b214bae27dc8c44a2164, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scoreText: {fileID: 160987741}
 --- !u!1 &812830982
 GameObject:
   m_ObjectHideFlags: 0
@@ -11141,7 +11115,6 @@ GameObject:
   - component: {fileID: 1262023012}
   - component: {fileID: 1262023014}
   - component: {fileID: 1262023013}
-  - component: {fileID: 1262023016}
   m_Layer: 0
   m_Name: leg.r
   m_TagString: Player
@@ -11228,18 +11201,6 @@ Transform:
   m_Father: {fileID: 1431701914}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -15.423, y: -0.31100002, z: -179.91}
---- !u!114 &1262023016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1262023011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67a3005de922b214bae27dc8c44a2164, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scoreText: {fileID: 160987741}
 --- !u!1 &1262288740
 GameObject:
   m_ObjectHideFlags: 0
@@ -12759,7 +12720,6 @@ GameObject:
   - component: {fileID: 2055775706}
   - component: {fileID: 2055775708}
   - component: {fileID: 2055775707}
-  - component: {fileID: 2055775710}
   m_Layer: 0
   m_Name: leg.l
   m_TagString: Player
@@ -12846,18 +12806,6 @@ Transform:
   m_Father: {fileID: 1431701914}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -15.424001, y: -0.31100002, z: 179.93701}
---- !u!114 &2055775710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2055775705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67a3005de922b214bae27dc8c44a2164, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scoreText: {fileID: 160987741}
 --- !u!1 &2065716133
 GameObject:
   m_ObjectHideFlags: 0
