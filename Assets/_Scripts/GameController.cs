@@ -36,10 +36,14 @@ public class GameController : MonoBehaviour {
 		scoreBoard.text = score.ToString ("F2");
 		if (Time.timeScale == 0) {
 			FindObjectOfType <ObstacleScript> ().enabled = false;
+			if (saveScore ()) {
+				scoreBoard.text = "New high score!\n" + score.ToString ("F2");
+			}
 			if (Input.GetKeyDown (KeyCode.Space) || Input.touchCount != 0) {
 				Time.timeScale = 1;
 				GameObject.FindGameObjectWithTag ("RetryScreen").GetComponent<Text> ().text = "";
 				score = 0;
+				Time.fixedDeltaTime = 0.01f;
 				SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 			}
 		}
@@ -122,8 +126,8 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-    void SettingsButtonClicked()
-    {
-        
-    }
+	//TODO: determine what data to save and save it. Also, load on startup.
+	public bool saveScore () {
+		return true;
+	}
 }

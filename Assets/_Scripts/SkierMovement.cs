@@ -93,11 +93,11 @@ public class SkierMovement : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
         bool isInput = false;
 		float tiltX = gc.AdjustedAccelerometer.x;
 		float tiltZ = gc.AdjustedAccelerometer.z;
 
+		//Tree stuff if not paused
 		if (!lost && !gc.settingsContainer.activeSelf)
         {
             /* <!-- THIS IS THE PART WHERE THE SLOW MOTION EFFECT IS DONE!!! --> */
@@ -127,7 +127,7 @@ public class SkierMovement : MonoBehaviour {
                     dee += minTimeScale;
                     Time.timeScale = dee;
                     Time.fixedDeltaTime = Time.timeScale * 0.01f;
-                } 
+                }
 				else 
 				{
                     Time.timeScale = 1f;
@@ -191,11 +191,6 @@ public class SkierMovement : MonoBehaviour {
                 }
 				//rb.rotation = Quaternion.Euler(bodyTilt * (rb.velocity.z / maxSpeed), 0, orgZrot);
             }
-        }
-
-        if (!isInput)
-        {
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z - (rb.velocity.z * 0.1f * Time.deltaTime ) );
         }
 
 		//Rotation by current speed, TODO: reenable, but rotate about Y axis once model is in
