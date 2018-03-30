@@ -6,6 +6,8 @@ public class CameraController : MonoBehaviour {
 	public Vector3 camoffset;
 	public SkierMovement skier;
 	public Transform head;
+	public float minZ;
+	public float maxZ;
 	// Use this for initialization
 	public float t = 0.5f;
 	public float zOffsetFactor = 100f;
@@ -20,7 +22,7 @@ public class CameraController : MonoBehaviour {
 		//current position =
 		Vector3 cCameraPos = transform.position;
 		//next-ideal position
-		camoffset.z = -(skier.rb.velocity.z * zOffsetFactor);
+		camoffset.z = Mathf.Clamp(-(skier.rb.velocity.z * zOffsetFactor), minZ, maxZ);
 		Vector3 nextPos = skier.gameObject.transform.position + camoffset;
 
 		transform.position = Vector3.Lerp (cCameraPos, nextPos, t);

@@ -11040,6 +11040,8 @@ MonoBehaviour:
   camoffset: {x: 10, y: 3.5, z: 0}
   skier: {fileID: 0}
   head: {fileID: 1484204617}
+  minZ: -5
+  maxZ: 5
   t: 0.3
   zOffsetFactor: 0.04
 --- !u!1 &2113693513
