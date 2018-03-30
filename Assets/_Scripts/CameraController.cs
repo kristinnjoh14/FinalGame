@@ -7,15 +7,23 @@ public class CameraController : MonoBehaviour {
 	public SkierMovement skier;
 	public Transform head;
 	// Use this for initialization
+	public float t = 0.5f;
+	public float zOffsetFactor = 100f;
+
 	void Start () {
 		skier = FindObjectOfType<SkierMovement> ();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		//Debug.Log (skier.transform.position);
-		camoffset.z = -6*(skier.rb.velocity.z / skier.maxSpeed);
-		transform.position = GameObject.FindGameObjectWithTag ("Player").transform.position + camoffset;
+		//current position =
+		Vector3 cCameraPos = transform.position;
+		//next-ideal position
+		camoffset.z = -(skier.rb.velocity.z * zOffsetFactor);
+		Vector3 nextPos = skier.gameObject.transform.position + camoffset;
+
+		transform.position = Vector3.Lerp (cCameraPos, nextPos, t);
 		transform.LookAt (head.position + new Vector3 (0,2,0));
 	}
 }
