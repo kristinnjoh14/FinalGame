@@ -9,13 +9,14 @@ public class SkierMovement : MonoBehaviour {
 	public Text retryText;
 	public float bodyTilt;
 	public float maxSpeed;
+	public float maxBodyTilt;
+	public float boardTiltFactor;
 
 	public float maxSpeedDiff;		//Maximum difference between "current" scrollspeed and actual scrollspeed (Current keeps being incremented)
 	public bool onGround;
-    private bool lost;
 	private float orgZrot;
 	private Quaternion orgRotation;
-	private Rigidbody rb;
+	public Rigidbody rb;
 	private SkiSoundManager sm;
     /// <summary>
     /// How close should a tree be until we start slowing our dude down
@@ -36,10 +37,11 @@ public class SkierMovement : MonoBehaviour {
     public float minTimeScale = 0.20f;
 
     public List<Collider> nearList;
-
+	void Awake () {
+		rb = GetComponent<Rigidbody> ();
+	}
 	// Use this for initialization
 	void Start () {
-		rb = GetComponent<Rigidbody> ();
 		orgRotation = rb.rotation;
 		orgZrot = orgRotation.eulerAngles.z;
 		onGround = true;
@@ -94,11 +96,11 @@ public class SkierMovement : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         bool isInput = false;
-		float tiltX = Mathf.Clamp(gc.AdjustedAccelerometer.x, -1, 1);
+		float tiltX = Mathf.Clamp(gc.inputSensitivity.value*gc.AdjustedAccelerometer.x, -1, 1);
 		//float tiltZ = gc.AdjustedAccelerometer.z;
 
 		//Tree stuff if not paused
-		if (!lost && !gc.settingsContainer.activeSelf)
+		if (!gc.lost && !gc.settingsContainer.activeSelf)
         {
             /* <!-- THIS IS THE PART WHERE THE SLOW MOTION EFFECT IS DONE!!! --> */
             GameObject nearestTree = null;
@@ -132,10 +134,8 @@ public class SkierMovement : MonoBehaviour {
 				{
                     Time.timeScale = 1f;
                 }
-            
             } 
-			else
-            {
+			else {
                 Time.timeScale = 1;
             }
             /* <!-- ABOVE IS THE PART WHERE THE TREE-DODGE SLOW MOTION EFFECT HAPPENS --> */
@@ -157,14 +157,14 @@ public class SkierMovement : MonoBehaviour {
             /*else if (Input.GetKeyUp (KeyCode.D) || Input.GetKeyUp (KeyCode.A)) {
 				rb.rotation = orgRotation;
 			}*/
-			bodyTilt -= 0.09f * bodyTilt;
-		//Actual device controls
 		} else {
-            if (gc.useTiltControls)
-            {		//Tilt controls
+			//Actual device controls
+            if (gc.useTiltControls) {		
+				//Tilt controls
 				if ((rb.velocity.z > 0 && tiltX < 0) || (rb.velocity.z < 0 && tiltX > 0)) {	//If movement is opposite velocity, force is greater proportional to how fast you are going
 					sm.hardTurnSound (deltaVel / maxSpeed);
 				}
+				bodyTilt += Time.deltaTime * 100 * tiltX;
 				rb.AddForce(0, 0, tiltX * speed * deltaVel);
 				/*pc.scrollSpeed += tiltZ*Time.deltaTime*speed;
 				if(pc.scrollSpeed < (pc.referenceSpeed - maxSpeedDiff)) {
@@ -173,8 +173,8 @@ public class SkierMovement : MonoBehaviour {
 				rb.rotation = Quaternion.Euler (bodyTilt*tiltX, 0, bodyTilt*tiltZ);
 				Camera.main.fieldOfView += (tiltZ*Time.deltaTime*speed);
 				Camera.main.fieldOfView = Mathf.Clamp (Camera.main.fieldOfView, 60, 100);*/
-            } else
-            {		//Tap controls
+            } else {
+				//Tap controls
 				//rb.rotation = orgRotation;
 				if (gc.LeftButtonPressed) {
 					addZForceLeft (deltaVel);
@@ -185,27 +185,39 @@ public class SkierMovement : MonoBehaviour {
 					isInput = true;
 					bodyTilt += Time.deltaTime * 100;
 				}
-				bodyTilt -= 0.09f * bodyTilt;
             }
         }
-
+		//rb.velocity -= rb.velocity * 2.5f * Time.deltaTime;
+		bodyTilt -= 0.09f * bodyTilt;
+		//Rotation by current speed
+		if (bodyTilt > maxBodyTilt) {
+			bodyTilt = maxBodyTilt;
+		} else if (bodyTilt < -maxBodyTilt) {
+			bodyTilt = -maxBodyTilt;
+		}
+		rb.rotation = Quaternion.Euler(bodyTilt + (rb.velocity.z / maxSpeed)*boardTiltFactor, Mathf.Rad2Deg * Mathf.Atan(rb.velocity.z / pc.scrollSpeed), orgZrot);
 	}
 
-	public void FixedUpdate () {
-		//Rotation by current speed, TODO: reenable, but rotate about Y axis once model is in
+	/*public void FixedUpdate () {
+		//Rotation by current speed
+		if (bodyTilt > maxBodyTilt) {
+			bodyTilt = maxBodyTilt;
+		} else if (bodyTilt < -maxBodyTilt) {
+			bodyTilt = -maxBodyTilt;
+		}
 		rb.rotation = Quaternion.Euler(bodyTilt, Mathf.Rad2Deg * (rb.velocity.z / maxSpeed), orgZrot);
-	}
+	}*/
 
 
 
 
 	//Called upon collision, stops time and sets retry text
-	public void OnCollisionEnter (Collision c2) {
+	/*public void OnCollisionEnter (Collision c2) {
         //Debug.Log(Vector3.Distance(c2.transform.position, transform.position));
 		if (c2.gameObject.CompareTag ("Tree")) {
 			Time.timeScale = 0;
-	        lost = true;
+	        gc.lost = true;
 			retryText.text = "Tap to retry";
 		}
-	}
+	}*/
 }

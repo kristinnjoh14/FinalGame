@@ -15,10 +15,11 @@ public class GameController : MonoBehaviour {
     public bool LeftButtonPressed;
     public bool RightButtonPressed;
 
+	public bool lost;
+
     public GameObject settingsContainer; 
 
-	[Range(1f, 2.5f)]
-	public float inputSensitivity;
+	public Slider inputSensitivity;
 	//public Quaternion deviceOrgRot;
 	Matrix4x4 baseMatrix = Matrix4x4.identity;
 
@@ -39,7 +40,7 @@ public class GameController : MonoBehaviour {
 	void Update () {
 		score += Time.deltaTime;
 		scoreBoard.text = score.ToString ("F2");
-		if (Time.timeScale == 0) {
+		if (Time.timeScale == 0  && lost) {
 			FindObjectOfType <ObstacleScript> ().enabled = false;
 			/*if (saveScore ()) {
 				scoreBoard.text = "New high score!\n" + score.ToString ("F2");
@@ -103,7 +104,7 @@ public class GameController : MonoBehaviour {
 
     private Text scoreBoard;
     void Awake() {
-        Application.targetFrameRate = 60;
+        //Application.targetFrameRate = 60;
 		if (instance == null) {
 			instance = this;
 		} else {
