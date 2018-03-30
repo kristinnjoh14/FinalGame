@@ -348,8 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39e118cc9f619459fa10192badeddc68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollSpeed: 40
-  referenceSpeed: 0
+  scrollSpeed: 60
   acceleration: 0.7
   planes:
   - {fileID: 671253829}
@@ -1218,7 +1217,7 @@ MonoBehaviour:
   player: {fileID: 0}
   plane: {fileID: 1262288740}
   mr: {fileID: 1262288741}
-  scrollSpeed: 0.1
+  scrollSpeedFactor: 220
   planeWidth: 90
   scale: 20
   textureHeight: 80
@@ -1417,7 +1416,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4035500555304310, guid: e36107dca152a184db4c61c7550fb2bb, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.04
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 4035500555304310, guid: e36107dca152a184db4c61c7550fb2bb, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1461,7 +1460,7 @@ Prefab:
     - target: {fileID: 114904134032913898, guid: e36107dca152a184db4c61c7550fb2bb,
         type: 2}
       propertyPath: factor
-      value: 0.45
+      value: 0.95
       objectReference: {fileID: 0}
     - target: {fileID: 59909519113654798, guid: e36107dca152a184db4c61c7550fb2bb,
         type: 2}
@@ -5515,7 +5514,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4299941218153458, guid: 187541860319fa54b887906e1a485056, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.2
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 4299941218153458, guid: 187541860319fa54b887906e1a485056, type: 2}
       propertyPath: m_LocalPosition.z
@@ -5559,7 +5558,7 @@ Prefab:
     - target: {fileID: 114763527100926294, guid: 187541860319fa54b887906e1a485056,
         type: 2}
       propertyPath: speed
-      value: 18
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 65050545710660942, guid: 187541860319fa54b887906e1a485056,
         type: 2}
@@ -5569,7 +5568,7 @@ Prefab:
     - target: {fileID: 114763527100926294, guid: 187541860319fa54b887906e1a485056,
         type: 2}
       propertyPath: maxBodyTilt
-      value: 37
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 65050545710660942, guid: 187541860319fa54b887906e1a485056,
         type: 2}
@@ -5599,17 +5598,32 @@ Prefab:
     - target: {fileID: 54190308286301402, guid: 187541860319fa54b887906e1a485056,
         type: 2}
       propertyPath: m_Drag
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 54739583329197904, guid: 187541860319fa54b887906e1a485056,
         type: 2}
       propertyPath: m_Drag
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114763527100926294, guid: 187541860319fa54b887906e1a485056,
         type: 2}
       propertyPath: boardTiltFactor
-      value: 12
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 135202606376307074, guid: 187541860319fa54b887906e1a485056,
+        type: 2}
+      propertyPath: m_Radius
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 135202606376307074, guid: 187541860319fa54b887906e1a485056,
+        type: 2}
+      propertyPath: m_Center.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114763527100926294, guid: 187541860319fa54b887906e1a485056,
+        type: 2}
+      propertyPath: maxSpeed
+      value: 150
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114794995928738886, guid: 187541860319fa54b887906e1a485056, type: 2}
@@ -6186,8 +6200,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cc7cf805f3ba4cc99687ba6c125f232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnRate: 0.045
-  spawnOffset: 260
+  spawnRate: 0.01
+  spawnOffset: 400
   TreePoolSize: 250
   trees:
   - {fileID: 1000011914158716, guid: 78af3a7aad589fa49b8fb946c9e57362, type: 2}
@@ -6443,7 +6457,7 @@ Transform:
   m_GameObject: {fileID: 1262288740}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 215, y: 1, z: 130}
+  m_LocalScale: {x: 240, y: 1, z: 130}
   m_Children: []
   m_Father: {fileID: 695449847}
   m_RootOrder: 0
@@ -7271,6 +7285,8 @@ MonoBehaviour:
   LeftButtonPressed: 0
   RightButtonPressed: 0
   lost: 0
+  speed: 0
+  acceleration: 0
   settingsContainer: {fileID: 1930682521}
   inputSensitivity: {fileID: 405567804}
 --- !u!4 &1755433174
@@ -11025,7 +11041,7 @@ MonoBehaviour:
   skier: {fileID: 0}
   head: {fileID: 1484204617}
   t: 0.3
-  zOffsetFactor: 0.05
+  zOffsetFactor: 0.04
 --- !u!1 &2113693513
 GameObject:
   m_ObjectHideFlags: 0

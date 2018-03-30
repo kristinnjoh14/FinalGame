@@ -33,7 +33,7 @@ public class ObstacleScript : MonoBehaviour {
 
 		spawnCountdown = spawnRate;
 		player = GameObject.FindGameObjectWithTag ("Player");
-		Zrange = (pc.planeWidth * 3) / 2;
+		Zrange = (pc.planeWidth * 5) / 2;
 
 	}
 

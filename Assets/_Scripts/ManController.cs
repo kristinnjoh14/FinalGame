@@ -167,7 +167,7 @@ public class ManController : MonoBehaviour {
     }
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		foreach(Pair p in rbs)
         {
             updateBodyPart(p);

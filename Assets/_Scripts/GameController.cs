@@ -16,6 +16,8 @@ public class GameController : MonoBehaviour {
     public bool RightButtonPressed;
 
 	public bool lost;
+	public float speed;
+	public float acceleration;
 
     public GameObject settingsContainer; 
 

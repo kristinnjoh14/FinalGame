@@ -9,7 +9,7 @@ public class paralaxController : MonoBehaviour {
     public GameObject plane;
     public MeshRenderer mr;
 
-    public float scrollSpeed = 10f;
+    public float scrollSpeedFactor;
 
     private float oldZCenter;
 
@@ -20,8 +20,12 @@ public class paralaxController : MonoBehaviour {
     public int textureHeight;
     public int textureWidth;
 
+	private float scrollSpeed;
     private float yCoord = 0;
     private float xCoord = 0;
+
+	private PlaneController pc;
+
     public Material magicMaterial;
 
     public AnimationCurve lightnessCurve;
@@ -30,15 +34,15 @@ public class paralaxController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
+		pc = FindObjectOfType<PlaneController> ();
 	}
 
     // Update is called once per frame
-
     private void Update()
     {
-
         Vector3 tmp = transform.position;
+
+		scrollSpeed = pc.scrollSpeed/scrollSpeedFactor;
 
         float dz = Camera.main.transform.position.z - tmp.z ;
         tmp.z = Camera.main.transform.position.z;
@@ -54,7 +58,6 @@ public class paralaxController : MonoBehaviour {
         tex.Apply();
 
         mr.material.mainTexture = tex;
-
     }
 
     Color[] doNoise(float xOffset, float yOffset)
