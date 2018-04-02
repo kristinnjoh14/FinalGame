@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour {
 	public Vector3 camoffset;
 	public SkierMovement skier;
 	public Transform head;
+    
 	public float minZ;
 	public float maxZ;
 	// Use this for initialization
@@ -14,7 +15,8 @@ public class CameraController : MonoBehaviour {
 
 	void Start () {
 		skier = FindObjectOfType<SkierMovement> ();
-	}
+        
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -22,8 +24,9 @@ public class CameraController : MonoBehaviour {
 		//current position =
 		Vector3 cCameraPos = transform.position;
 		//next-ideal position
-		camoffset.z = Mathf.Clamp(-(skier.rb.velocity.z * zOffsetFactor), minZ, maxZ);
-		Vector3 nextPos = skier.gameObject.transform.position + camoffset;
+		camoffset.z = Mathf.Clamp(-(head.position.z * zOffsetFactor), minZ, maxZ);
+
+		Vector3 nextPos = head.gameObject.transform.position + camoffset;
 
 		transform.position = Vector3.Lerp (cCameraPos, nextPos, t);
 		transform.LookAt (head.position + new Vector3 (0,2,0));

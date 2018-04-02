@@ -19,7 +19,9 @@ public class GameController : MonoBehaviour {
 	public float speed;
 	public float acceleration;
 
-    public GameObject settingsContainer; 
+    public GameObject settingsContainer;
+
+
 	public Slider inputSensitivity;
 	Matrix4x4 baseMatrix = Matrix4x4.identity;
 
@@ -46,12 +48,20 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		score += Time.deltaTime;
-		scoreBoard.text = score.ToString ("F2");
+        if (scoreBoard != null)
+        {
+            scoreBoard.text = score.ToString("F2");
+        }
 		if (Time.timeScale == 0  && lost) {
 			FindObjectOfType <ObstacleScript> ().enabled = false;
-			if (dc.newScore ((int) score, score)) {
-				scoreBoard.text = "New high score!\n" + score.ToString ("F2");
-			}
+            if (dc != null)
+            {
+                if (dc.newScore((int)score, score))
+                {
+                    scoreBoard.text = "New high score!\n" + score.ToString("F2");
+                }
+            }
+
 			if (Input.GetKeyDown (KeyCode.Space) || Input.touchCount != 0) {
 				Time.timeScale = 1;
 				GameObject.FindGameObjectWithTag ("RetryScreen").GetComponent<Text> ().text = "";

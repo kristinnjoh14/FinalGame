@@ -785,6 +785,11 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 357717014}
+--- !u!59 &374163232 stripped
+HingeJoint:
+  m_PrefabParentObject: {fileID: 59696886885745572, guid: e36107dca152a184db4c61c7550fb2bb,
+    type: 2}
+  m_PrefabInternal: {fileID: 784024688}
 --- !u!1 &405567802
 GameObject:
   m_ObjectHideFlags: 0
@@ -1656,6 +1661,30 @@ Prefab:
         type: 2}
       propertyPath: m_AutoConfigureConnectedAnchor
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1622362286104574, guid: e36107dca152a184db4c61c7550fb2bb, type: 2}
+      propertyPath: m_TagString
+      value: model
+      objectReference: {fileID: 0}
+    - target: {fileID: 114904134032913898, guid: e36107dca152a184db4c61c7550fb2bb,
+        type: 2}
+      propertyPath: rightLegHinge
+      value: 
+      objectReference: {fileID: 2094590207}
+    - target: {fileID: 114904134032913898, guid: e36107dca152a184db4c61c7550fb2bb,
+        type: 2}
+      propertyPath: leftLegHinge
+      value: 
+      objectReference: {fileID: 374163232}
+    - target: {fileID: 114904134032913898, guid: e36107dca152a184db4c61c7550fb2bb,
+        type: 2}
+      propertyPath: hipHinge
+      value: 
+      objectReference: {fileID: 1848801312}
+    - target: {fileID: 54005842258248382, guid: e36107dca152a184db4c61c7550fb2bb,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e36107dca152a184db4c61c7550fb2bb, type: 2}
@@ -7302,6 +7331,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!59 &1848801312 stripped
+HingeJoint:
+  m_PrefabParentObject: {fileID: 59478263708038820, guid: e36107dca152a184db4c61c7550fb2bb,
+    type: 2}
+  m_PrefabInternal: {fileID: 784024688}
 --- !u!1 &1890549695
 GameObject:
   m_ObjectHideFlags: 0
@@ -11198,6 +11232,11 @@ MonoBehaviour:
   maxZ: 5
   t: 0.3
   zOffsetFactor: 0.04
+--- !u!59 &2094590207 stripped
+HingeJoint:
+  m_PrefabParentObject: {fileID: 59466294742059978, guid: e36107dca152a184db4c61c7550fb2bb,
+    type: 2}
+  m_PrefabInternal: {fileID: 784024688}
 --- !u!1 &2113693513
 GameObject:
   m_ObjectHideFlags: 0

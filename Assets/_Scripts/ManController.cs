@@ -23,7 +23,7 @@ public class ManController : MonoBehaviour {
 
     public bool doMeOnce = true;
 
-    public HingeJoint leftLegHinge, rightLegHinge;
+    public HingeJoint leftLegHinge, rightLegHinge, hipHinge;
 
     public List<Pair> rbs;
     /*
@@ -63,6 +63,7 @@ public class ManController : MonoBehaviour {
         
         foreach( Rigidbody r in rs)
         {
+            r.gameObject.tag = "model";
             Pair t = new Pair(r, r.rotation);
             //Debug.Log(t.rot);
             rbs.Add(t);
@@ -161,8 +162,24 @@ public class ManController : MonoBehaviour {
 
     }
 
-    void releaseME()
+    public void releaseME()
     {
+        Destroy(leftLegHinge);
+        Destroy(rightLegHinge);
+        Destroy(hipHinge);
+
+        this.factor = 0.9f;
+
+        foreach (Pair p in rbs)
+        {
+            if (!p.rb.gameObject.name.Equals("Armature") && !p.rb.gameObject.name.Equals("Hips"))
+            {
+                JointSpring j = new JointSpring();
+                j.spring = 10;
+                p.rb.gameObject.GetComponent<HingeJoint>().spring = j;
+            }
+            p.rb.AddForce(new Vector3(-2000, 1020, 0));
+        }
 
     }
 

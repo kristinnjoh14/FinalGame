@@ -9,7 +9,7 @@ public class TreeScript : MonoBehaviour {
     public ObstacleScript obstacleScript;
 	//private GameController gc;
 	private Text scoreBoard;
-
+    public SkierMovement player;
 
  
     //check for the 
@@ -22,8 +22,18 @@ public class TreeScript : MonoBehaviour {
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("model"))
+        {
+            player.treeCollision();
+        }
+        //Debug.Log(collision.gameObject.tag);
+    }
+
     // Use this for initialization
     void Start () {
+        player = GameObject.Find("SnowBoardbone").GetComponent<SkierMovement>();
 		//gc = FindObjectOfType<GameController> ();
 	}
 	

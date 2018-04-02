@@ -30,7 +30,10 @@ public class SkierMovement : MonoBehaviour {
     public float fovChange = 10f;
 
 	private PlaneController pc;
-    
+
+
+    public ManController manController;
+
     /// <summary>
     /// The minimum time scale.
     /// </summary>
@@ -40,6 +43,7 @@ public class SkierMovement : MonoBehaviour {
 
 	void Awake () {
 		rb = GetComponent<Rigidbody> ();
+        manController = GameObject.Find("Man_prepared").GetComponentInChildren<ManController>();
 	}
 	// Use this for initialization
 	void Start () {
@@ -190,4 +194,10 @@ public class SkierMovement : MonoBehaviour {
 		}
 		rb.rotation = Quaternion.Euler(Mathf.Clamp(bodyTilt + (rb.velocity.z / maxSpeed)*boardTiltFactor, -35, 35), Mathf.Rad2Deg * Mathf.Atan(rb.velocity.z / pc.scrollSpeed), orgZrot);
 	}
+
+    public void treeCollision()
+    {
+        manController.releaseME();
+        pc.stopEverything();
+    }
 }
