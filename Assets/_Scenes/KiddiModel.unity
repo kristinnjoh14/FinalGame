@@ -1220,8 +1220,8 @@ MonoBehaviour:
   scrollSpeedFactor: 220
   planeWidth: 90
   scale: 20
-  textureHeight: 80
-  textureWidth: 200
+  textureHeight: 128
+  textureWidth: 256
   magicMaterial: {fileID: 2100000, guid: 36c162a1fb9042d4c89faeaded396a4c, type: 2}
   lightnessCurve:
     serializedVersion: 2
