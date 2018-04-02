@@ -48,7 +48,7 @@ public class SkierMovement : MonoBehaviour {
 		sm = GetComponent<SkiSoundManager> ();
 		gc = FindObjectOfType<GameController> ();
 		pc = FindObjectOfType<PlaneController> ();
-		retryText = GameObject.FindGameObjectWithTag ("RetryScreen").GetComponent<Text> ();
+		//retryText = GameObject.FindGameObjectWithTag ("RetryScreen").GetComponent<Text> ();
 	}
 
     private void OnTriggerEnter(Collider other)
@@ -199,7 +199,7 @@ public class SkierMovement : MonoBehaviour {
 		} else if (bodyTilt < -maxBodyTilt) {
 			bodyTilt = -maxBodyTilt;
 		}
-		rb.rotation = Quaternion.Euler(bodyTilt + (rb.velocity.z / maxSpeed)*boardTiltFactor, Mathf.Rad2Deg * Mathf.Atan(rb.velocity.z / pc.scrollSpeed), orgZrot);
+		rb.rotation = Quaternion.Euler(Mathf.Clamp(bodyTilt + (rb.velocity.z / maxSpeed)*boardTiltFactor, -35, 35), Mathf.Rad2Deg * Mathf.Atan(rb.velocity.z / pc.scrollSpeed), orgZrot);
 	}
 
 	/*public void FixedUpdate () {

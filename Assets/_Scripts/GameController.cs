@@ -25,10 +25,15 @@ public class GameController : MonoBehaviour {
 	//public Quaternion deviceOrgRot;
 	Matrix4x4 baseMatrix = Matrix4x4.identity;
 
+	private DataController dc;
 	private static GameController instance;
 
 	// Use this for initializatin
 	void Start() {
+		dc = FindObjectOfType<DataController> ();
+		dc.loadSettings ();
+		useTiltControls = !dc.settings.useTilt;		//Negation because whoops I flipped the logic in my head while writing it
+		inputSensitivity.value = dc.settings.accelerometerSensitivity;
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 		score = 0;
 		scoreBoard = GameObject.FindGameObjectWithTag("ScoreCounter").GetComponent<Text>();
@@ -44,9 +49,9 @@ public class GameController : MonoBehaviour {
 		scoreBoard.text = score.ToString ("F2");
 		if (Time.timeScale == 0  && lost) {
 			FindObjectOfType <ObstacleScript> ().enabled = false;
-			/*if (saveScore ()) {
+			if (dc.newScore ((int) score, score)) {
 				scoreBoard.text = "New high score!\n" + score.ToString ("F2");
-			}*/
+			}
 			if (Input.GetKeyDown (KeyCode.Space) || Input.touchCount != 0) {
 				Time.timeScale = 1;
 				GameObject.FindGameObjectWithTag ("RetryScreen").GetComponent<Text> ().text = "";
@@ -106,7 +111,7 @@ public class GameController : MonoBehaviour {
 
     private Text scoreBoard;
     void Awake() {
-        //Application.targetFrameRate = 60;
+        Application.targetFrameRate = 60;
 		if (instance == null) {
 			instance = this;
 		} else {
@@ -134,16 +139,18 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	/*//TODO: determine what data to save and save it. Also, load on startup.
-	public bool saveScore () {
+	//TODO: determine what data to save and save it. Also, load on startup.
+	/*public bool saveScore () {
 		if (true) { //TODO: check if this is the highest score ever
-			Stream stream = File.Open("MySavedGame.gamed", FileMode.Create);
-			BinaryFormatter bformatter = new BinaryFormatter();
-			bformatter.Binder = new SerializationBinder(); 
+			Stream stream = File.Open ("MySavedGame.gamed", FileMode.Create);
+			BinaryFormatter bformatter = new BinaryFormatter ();
+			bformatter.Binder = new SerializationBinder (); 
 			Debug.Log ("Writing Information");
-			bformatter.Serialize(stream, score);
-			stream.Close();
+			bformatter.Serialize (stream, score);
+			stream.Close ();
 			return true;
+		} else {
+			return false;
 		}
 	}*/
 }

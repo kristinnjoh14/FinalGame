@@ -9,6 +9,10 @@ TagManager:
   - Tree
   - treeFilter
   - SettingsContainer
+  - ScoreSheet
+  - StatsContainer
+  - SensitivitySlider
+  - UseTiltToggle
   layers:
   - Default
   - TransparentFX

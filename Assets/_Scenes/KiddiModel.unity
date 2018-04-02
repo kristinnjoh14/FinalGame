@@ -348,7 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39e118cc9f619459fa10192badeddc68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollSpeed: 60
+  scrollSpeed: 65
   acceleration: 0.7
   planes:
   - {fileID: 671253829}
@@ -1460,7 +1460,7 @@ Prefab:
     - target: {fileID: 114904134032913898, guid: e36107dca152a184db4c61c7550fb2bb,
         type: 2}
       propertyPath: factor
-      value: 0.95
+      value: 0.96
       objectReference: {fileID: 0}
     - target: {fileID: 59909519113654798, guid: e36107dca152a184db4c61c7550fb2bb,
         type: 2}
@@ -5568,7 +5568,7 @@ Prefab:
     - target: {fileID: 114763527100926294, guid: 187541860319fa54b887906e1a485056,
         type: 2}
       propertyPath: maxBodyTilt
-      value: 30
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 65050545710660942, guid: 187541860319fa54b887906e1a485056,
         type: 2}
@@ -5613,7 +5613,7 @@ Prefab:
     - target: {fileID: 135202606376307074, guid: 187541860319fa54b887906e1a485056,
         type: 2}
       propertyPath: m_Radius
-      value: 0.15
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 135202606376307074, guid: 187541860319fa54b887906e1a485056,
         type: 2}
@@ -6200,8 +6200,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cc7cf805f3ba4cc99687ba6c125f232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnRate: 0.01
-  spawnOffset: 400
+  spawnRate: 0.003
+  spawnOffset: 225
   TreePoolSize: 250
   trees:
   - {fileID: 1000011914158716, guid: 78af3a7aad589fa49b8fb946c9e57362, type: 2}
@@ -7383,7 +7383,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1916950800
 Transform:
   m_ObjectHideFlags: 0
@@ -7511,7 +7511,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -420264895
+  randomSeed: 1092199934
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -8022,7 +8022,7 @@ ParticleSystem:
           m_RotationOrder: 4
     arc:
       value: 360
-      mode: 3
+      mode: 0
       spread: 0
       speed:
         serializedVersion: 2

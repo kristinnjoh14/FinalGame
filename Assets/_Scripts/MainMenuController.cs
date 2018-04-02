@@ -1,16 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
+using TMPro;
 
 public class MainMenuController : MonoBehaviour {
-	private int highScore;
+	private DataController dc;
+	private TextMeshProUGUI scoreSheet;
+	private Slider sensitivitySlider;
+	private Toggle useTiltToggle;
 	// Use this for initialization
 	void Start () {
-		//loadData ();
+		dc = FindObjectOfType<DataController> ();
+		dc.loadSave ();
+		dc.loadSettings ();
+		initScores ();
+		initSettings ();
 	}
 	
 	// Update is called once per frame
@@ -18,22 +27,32 @@ public class MainMenuController : MonoBehaviour {
 		
 	}
 
+	void initScores () {
+		scoreSheet = GameObject.FindGameObjectWithTag ("ScoreSheet").GetComponent<TextMeshProUGUI> ();
+		scoreSheet.text += dc.save.highScore.ToString () + "\nLongest run: ";
+		scoreSheet.text += dc.save.longestRun.ToString () + "\n\nTotal number of runs: ";
+		scoreSheet.text += dc.save.numberOfRuns;
+		GameObject.FindGameObjectWithTag ("StatsContainer").SetActive (false);
+	}
+
+	public void initSettings () { 
+		sensitivitySlider = GameObject.FindGameObjectWithTag ("SensitivitySlider").GetComponent<Slider> ();
+		useTiltToggle = GameObject.FindGameObjectWithTag ("UseTiltToggle").GetComponent<Toggle> ();
+		if (dc.settings.accelerometerSensitivity != 0) {
+			sensitivitySlider.value = dc.settings.accelerometerSensitivity;
+		}
+		useTiltToggle.isOn = dc.settings.useTilt;
+		GameObject.FindGameObjectWithTag ("SettingsContainer").SetActive (false);
+	}
+
 	//Loads main scene
 	public void startGame () {
 		SceneManager.LoadScene ("KiddiModel");
 	}
 
-	//Gets main scene TODO:set to correct scene before deployment
-	/*public Scene getMainScene () {
-		SceneManager.GetSceneByName ("KiddiModel");
+	public void saveSettings () {
+		dc.settings.useTilt = useTiltToggle.isOn;
+		dc.settings.accelerometerSensitivity = sensitivitySlider.value;
+		dc.saveSettings ();
 	}
-
-	/*private void loadData () {
-		Stream stream = File.Open("MySavedGame.gamed", FileMode.Open);
-		BinaryFormatter bformatter = new BinaryFormatter();
-		bformatter.Binder = new SerializationBinder(); 
-		Debug.Log ("Reading Data");
-		highScore = (int)bformatter.Deserialize(stream);
-		stream.Close();
-	}*/
 }
