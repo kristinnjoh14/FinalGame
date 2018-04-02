@@ -13,6 +13,7 @@ public class MainMenuController : MonoBehaviour {
 	private TextMeshProUGUI scoreSheet;
 	private Slider sensitivitySlider;
 	private Toggle useTiltToggle;
+	private Vector3 orientation = Vector3.zero;
 	// Use this for initialization
 	void Start () {
 		dc = FindObjectOfType<DataController> ();
@@ -50,9 +51,16 @@ public class MainMenuController : MonoBehaviour {
 		SceneManager.LoadScene ("KiddiModel");
 	}
 
+	public void calibrate () {
+		orientation = Input.acceleration;
+	}
+
 	public void saveSettings () {
-		dc.settings.useTilt = useTiltToggle.isOn;
+		dc.settings.useTilt = !useTiltToggle.isOn;
 		dc.settings.accelerometerSensitivity = sensitivitySlider.value;
+		dc.settings.accelerometerOffsetX = orientation.x;
+		dc.settings.accelerometerOffsetY = orientation.y;
+		dc.settings.accelerometerOffsetZ = orientation.z;
 		dc.saveSettings ();
 	}
 }

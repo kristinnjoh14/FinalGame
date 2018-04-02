@@ -58,7 +58,13 @@ public class paralaxController : MonoBehaviour {
         tex.Apply();
 
         mr.material.mainTexture = tex;
+		StartCoroutine (DeleteTextureInOneFrame (tex));
     }
+
+	public IEnumerator DeleteTextureInOneFrame (Texture2D tex) {
+		yield return null;
+		Destroy (tex);
+	}
 
     Color[] doNoise(float xOffset, float yOffset)
     {

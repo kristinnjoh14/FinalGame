@@ -37,6 +37,7 @@ public class SkierMovement : MonoBehaviour {
     public float minTimeScale = 0.20f;
 
     public List<Collider> nearList;
+
 	void Awake () {
 		rb = GetComponent<Rigidbody> ();
 	}
@@ -155,9 +156,6 @@ public class SkierMovement : MonoBehaviour {
 	                isInput = true;
 					bodyTilt += Time.deltaTime * 100;
 	            }
-	            /*else if (Input.GetKeyUp (KeyCode.D) || Input.GetKeyUp (KeyCode.A)) {
-					rb.rotation = orgRotation;
-				}*/
 			} else {
 				//Actual device controls
 	            if (gc.useTiltControls) {		
@@ -167,16 +165,8 @@ public class SkierMovement : MonoBehaviour {
 					}
 					bodyTilt += Time.deltaTime * 100 * tiltX;
 					rb.AddForce(0, 0, tiltX * speed * deltaVel);
-					/*pc.scrollSpeed += tiltZ*Time.deltaTime*speed;
-					if(pc.scrollSpeed < (pc.referenceSpeed - maxSpeedDiff)) {
-						pc.scrollSpeed = pc.referenceSpeed - maxSpeedDiff;
-					}
-					rb.rotation = Quaternion.Euler (bodyTilt*tiltX, 0, bodyTilt*tiltZ);
-					Camera.main.fieldOfView += (tiltZ*Time.deltaTime*speed);
-					Camera.main.fieldOfView = Mathf.Clamp (Camera.main.fieldOfView, 60, 100);*/
 	            } else {
 					//Tap controls
-					//rb.rotation = orgRotation;
 					if (gc.LeftButtonPressed) {
 						addZForceLeft (deltaVel);
 						isInput = true;
@@ -189,7 +179,6 @@ public class SkierMovement : MonoBehaviour {
 	            }
 	        }
 		}
-		//rb.velocity -= rb.velocity * 2.5f * Time.deltaTime;
 		if (!gc.settingsContainer.activeSelf) {
 			bodyTilt -= 0.09f * bodyTilt;
 		}
@@ -201,27 +190,4 @@ public class SkierMovement : MonoBehaviour {
 		}
 		rb.rotation = Quaternion.Euler(Mathf.Clamp(bodyTilt + (rb.velocity.z / maxSpeed)*boardTiltFactor, -35, 35), Mathf.Rad2Deg * Mathf.Atan(rb.velocity.z / pc.scrollSpeed), orgZrot);
 	}
-
-	/*public void FixedUpdate () {
-		//Rotation by current speed
-		if (bodyTilt > maxBodyTilt) {
-			bodyTilt = maxBodyTilt;
-		} else if (bodyTilt < -maxBodyTilt) {
-			bodyTilt = -maxBodyTilt;
-		}
-		rb.rotation = Quaternion.Euler(bodyTilt, Mathf.Rad2Deg * (rb.velocity.z / maxSpeed), orgZrot);
-	}*/
-
-
-
-
-	//Called upon collision, stops time and sets retry text
-	/*public void OnCollisionEnter (Collision c2) {
-        //Debug.Log(Vector3.Distance(c2.transform.position, transform.position));
-		if (c2.gameObject.CompareTag ("Tree")) {
-			Time.timeScale = 0;
-	        gc.lost = true;
-			retryText.text = "Tap to retry";
-		}
-	}*/
 }

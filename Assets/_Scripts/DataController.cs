@@ -51,9 +51,15 @@ public class DataController : MonoBehaviour {
 		if (PlayerPrefs.HasKey ("AccelerometerSensitivity")) {
 			settings.accelerometerSensitivity = PlayerPrefs.GetFloat ("AccelerometerSensitivity");
 		}
-		/*if (PlayerPrefs.HasKey ("AccelerometerOffset")) {
-			settings.accelerometerOffset = PlayerPrefs.GetInt ("AccelerometerOffset");
-		}*/
+		if (PlayerPrefs.HasKey ("AccelerometerOffsetX")) {
+			settings.accelerometerOffsetX = PlayerPrefs.GetFloat ("AccelerometerOffsetX");
+		}
+		if (PlayerPrefs.HasKey ("AccelerometerOffsetY")) {
+			settings.accelerometerOffsetY = PlayerPrefs.GetFloat ("AccelerometerOffsetY");
+		}
+		if (PlayerPrefs.HasKey ("AccelerometerOffsetZ")) {
+			settings.accelerometerOffsetZ = PlayerPrefs.GetFloat ("AccelerometerOffsetZ");
+		}
 	}
 
 	public void saveSettings () {
@@ -63,6 +69,9 @@ public class DataController : MonoBehaviour {
 		} else {
 			PlayerPrefs.SetInt ("UseTilt", 0);
 		}
+		PlayerPrefs.SetFloat ("AccelerometerOffsetX", settings.accelerometerOffsetX);
+		PlayerPrefs.SetFloat ("AccelerometerOffsetY", settings.accelerometerOffsetY);
+		PlayerPrefs.SetFloat ("AccelerometerOffsetZ", settings.accelerometerOffsetZ);
 	}
 
 	public void saveScores () {

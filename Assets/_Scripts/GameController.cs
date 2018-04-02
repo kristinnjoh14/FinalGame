@@ -8,7 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 
 public class GameController : MonoBehaviour {
-    public float score;
+    public float score = 0;
 
     public bool useTiltControls = true;
 
@@ -20,9 +20,7 @@ public class GameController : MonoBehaviour {
 	public float acceleration;
 
     public GameObject settingsContainer; 
-
 	public Slider inputSensitivity;
-	//public Quaternion deviceOrgRot;
 	Matrix4x4 baseMatrix = Matrix4x4.identity;
 
 	private DataController dc;
@@ -30,17 +28,19 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initializatin
 	void Start() {
+		//Load settings
 		dc = FindObjectOfType<DataController> ();
 		dc.loadSettings ();
-		useTiltControls = !dc.settings.useTilt;		//Negation because whoops I flipped the logic in my head while writing it
+		useTiltControls = dc.settings.useTilt;
 		inputSensitivity.value = dc.settings.accelerometerSensitivity;
+		Calibrate (dc.settings.accelerometerOffsetX, dc.settings.accelerometerOffsetY, dc.settings.accelerometerOffsetZ);
+
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 		score = 0;
 		scoreBoard = GameObject.FindGameObjectWithTag("ScoreCounter").GetComponent<Text>();
 		cogWheelClicked ();
 		settingsContainer = GameObject.FindGameObjectWithTag ("SettingsContainer");
 		outsideOfSettingsMenuClicked ();
-		Calibrate ();
 	}
 
 	// Update is called once per frame
@@ -124,8 +124,19 @@ public class GameController : MonoBehaviour {
 	//https://forum.unity.com/threads/input-acceleration-calibration.317121/
 	//His code with slight adjustments used in both Calibrate and AdjustedAccelerometer
 	//Sets value needed for the calibration of AdjustedAccelerometer function
+	public void setCalibration () {
+		Vector3 tmp = Input.acceleration;
+		dc.settings.accelerometerOffsetX = tmp.x;
+		dc.settings.accelerometerOffsetY = tmp.y;
+		dc.settings.accelerometerOffsetZ = tmp.z;
+	}
 	public void Calibrate() {
-		Quaternion rotate = Quaternion.FromToRotation(new Vector3(0.0f, 1.0f, 0.0f), Input.acceleration);
+		Calibrate (dc.settings.accelerometerOffsetX, dc.settings.accelerometerOffsetY, dc.settings.accelerometerOffsetZ);
+		dc.saveSettings ();
+	}
+	//Overload to set saved 0-position setting
+	public void Calibrate(float x, float y, float z) {
+		Quaternion rotate = Quaternion.FromToRotation(new Vector3(0.0f, 1.0f, 0.0f), new Vector3 (x,y,z));
 
 		Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, rotate, new Vector3(1.0f, 1.0f, 1.0f));
 
@@ -139,18 +150,10 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	//TODO: determine what data to save and save it. Also, load on startup.
-	/*public bool saveScore () {
-		if (true) { //TODO: check if this is the highest score ever
-			Stream stream = File.Open ("MySavedGame.gamed", FileMode.Create);
-			BinaryFormatter bformatter = new BinaryFormatter ();
-			bformatter.Binder = new SerializationBinder (); 
-			Debug.Log ("Writing Information");
-			bformatter.Serialize (stream, score);
-			stream.Close ();
-			return true;
-		} else {
-			return false;
-		}
-	}*/
+	public void saveSettings () {
+		Calibrate ();
+		dc.settings.accelerometerSensitivity = inputSensitivity.value;
+		dc.settings.useTilt = useTiltControls;
+		dc.saveSettings ();
+	}
 }
