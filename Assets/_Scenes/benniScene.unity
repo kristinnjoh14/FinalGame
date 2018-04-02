@@ -7390,8 +7390,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1910061644}
   m_LocalRotation: {x: 0.5597091, y: 0.43211782, z: 0.55970913, w: -0.4321176}
-  m_LocalPosition: {x: -189, y: 132, z: -10}
-  m_LocalScale: {x: 28.257605, y: 0.65405905, z: 31.146954}
+  m_LocalPosition: {x: -276, y: 149, z: -10}
+  m_LocalScale: {x: 140.93481, y: 0.65405905, z: 31.146954}
   m_Children:
   - {fileID: 2028890095}
   m_Father: {fileID: 0}
@@ -7415,7 +7415,7 @@ MonoBehaviour:
   planeWidth: 10
   scale: 10
   textureHeight: 100
-  textureWidth: 100
+  textureWidth: 200
   magicMaterial: {fileID: 2100000, guid: c92c1ce5cd95c81468c7416030912f67, type: 2}
   transparencyCurve:
     serializedVersion: 2
