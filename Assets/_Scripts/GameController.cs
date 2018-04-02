@@ -19,7 +19,8 @@ public class GameController : MonoBehaviour {
 	public float speed;
 	public float acceleration;
 
-    public GameObject settingsContainer; 
+    public GameObject settingsContainer;
+
 
 	public Slider inputSensitivity;
 	//public Quaternion deviceOrgRot;
@@ -31,7 +32,10 @@ public class GameController : MonoBehaviour {
 	// Use this for initializatin
 	void Start() {
 		dc = FindObjectOfType<DataController> ();
-		dc.loadSettings ();
+        if (dc != null)
+        {
+            dc.loadSettings();
+        }
 		useTiltControls = !dc.settings.useTilt;		//Negation because whoops I flipped the logic in my head while writing it
 		inputSensitivity.value = dc.settings.accelerometerSensitivity;
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -46,12 +50,20 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		score += Time.deltaTime;
-		scoreBoard.text = score.ToString ("F2");
+        if (scoreBoard != null)
+        {
+            scoreBoard.text = score.ToString("F2");
+        }
 		if (Time.timeScale == 0  && lost) {
 			FindObjectOfType <ObstacleScript> ().enabled = false;
-			if (dc.newScore ((int) score, score)) {
-				scoreBoard.text = "New high score!\n" + score.ToString ("F2");
-			}
+            if (dc != null)
+            {
+                if (dc.newScore((int)score, score))
+                {
+                    scoreBoard.text = "New high score!\n" + score.ToString("F2");
+                }
+            }
+
 			if (Input.GetKeyDown (KeyCode.Space) || Input.touchCount != 0) {
 				Time.timeScale = 1;
 				GameObject.FindGameObjectWithTag ("RetryScreen").GetComponent<Text> ().text = "";

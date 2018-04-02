@@ -90,6 +90,12 @@ public class PlaneController : MonoBehaviour {
         }
 	}
 
+    public void stopEverything()
+    {
+        this.scrollSpeed = 0;
+        acceleration = 0;
+    }
+
 	/*Texture2D calcNoise() {
 		return null;
 	}*/
