@@ -36,13 +36,13 @@ public class SkiSoundManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		hardTurnSource.volume -= 0.5f*Time.deltaTime;
-		windSource.volume = Camera.main.fieldOfView / 150;
+		//windSource.volume = Camera.main.fieldOfView / 150;
 		audioSource.pitch = Time.timeScale;
 		hardTurnSource.pitch = Time.timeScale;
         windSource.pitch = Time.timeScale;
 		if (!turningHard)  {
-			hardTurnSource.volume -= 0.7f*Time.deltaTime;
-			if (hardTurnSource.volume < 0.05f) {
+			hardTurnSource.volume -= Time.deltaTime;
+			if (hardTurnSource.volume < 0.1f) {
 				hardTurnSource.Stop ();
 			}
 		}
@@ -54,7 +54,7 @@ public class SkiSoundManager : MonoBehaviour {
 			hardTurnSource.time = 0;//Random.value/2;
 			hardTurnSource.Play ();
 			turningHard = true;
-		} else if (deltaVel > 0.95f) {
+		} else if (deltaVel > 0.93f) {
 			turningHard = false;
 		}
 	}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CanvasController : MonoBehaviour {
-	private static CanvasController instance;
+	/*private static CanvasController instance;
 	void Awake() {
 		if (instance == null) {
 			instance = this;
@@ -11,7 +11,7 @@ public class CanvasController : MonoBehaviour {
 		} else {
 			Destroy (gameObject);
 		}
-	}
+	}*/
 
 	// Use this for initialization
 	void Start () {

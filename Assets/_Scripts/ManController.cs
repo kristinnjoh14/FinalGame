@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ManController : MonoBehaviour {
 
@@ -24,25 +25,11 @@ public class ManController : MonoBehaviour {
     public bool doMeOnce = true;
 
     public HingeJoint leftLegHinge, rightLegHinge, hipHinge;
-
+	public List<HingeJoint> allJoints;
     public List<Pair> rbs;
-    /*
-    public Rigidbody chestRb, hipRb, neckRb,
-        lLegRb, rLegRb, 
-        lShinRb, rShinRb,
-        lFootRb, rFootRb,
-        lArmRb, rArmRb,
-        lForeArmRb, rForeArmRb,
-        lHandRb, rHandRb;
-    Vector3 iChestRotation, iHipRotation, iNeckRotation,
-        iLeftLegRotation, iRightLegRotation,
-        iLeftShinRotation, iRightShinRotation,
-        iLeftFootRotation, iRightFootRotation,
-        iLeftArmRotation, iRightArmRotation,
-        iLeftForeArmRotation, iRightForeArmRotation,
-        iLeftHandRotation, iRightHandRotation;
 
-    */
+	private GameController gc;
+ 
     void updateBodyPart(Pair p)
     {
         //get rb current rotation
@@ -52,10 +39,8 @@ public class ManController : MonoBehaviour {
         
     }
 
-
 	// Use this for initialization
 	void Start () {
-
         //don't grade us on this please.
         //get all rigidbodys in chillen
         Rigidbody[] rs = gameObject.GetComponentsInChildren<Rigidbody>();
@@ -63,103 +48,20 @@ public class ManController : MonoBehaviour {
         
         foreach( Rigidbody r in rs)
         {
+
+			BodyPartController bpc = new BodyPartController ();
+			r.gameObject.AddComponent<BodyPartController> ();
+
             r.gameObject.tag = "model";
             Pair t = new Pair(r, r.rotation);
             //Debug.Log(t.rot);
             rbs.Add(t);
-           
+			r.maxDepenetrationVelocity = 1/111000;
+			foreach(HingeJoint j in r.gameObject.GetComponents<HingeJoint> ()) {
+				allJoints.Add (j);
+			}
         }
-
-        //loop through rbs and assign them to the correct rbs, and initial rotations. 
-        /*
-        foreach(Rigidbody r in rs)
-        {
-            Debug.Log(r.gameObject.name);
-
-            Vector3 rot = r.rotation.eulerAngles;
-
-            switch ( r.gameObject.name )
-            {
-
-                case "Hips":
-                    hipRb = r;
-                    iHipRotation = rot;
-                    break;
-
-                case "Chest":
-                    chestRb = r;
-                    iChestRotation = rot;
-                    break;
-
-                case "arm.l":
-                    lArmRb = r;
-                    iLeftArmRotation = rot;
-                    break;
-
-                case "arm.r":
-                    rArmRb = r;
-                    iRightArmRotation = rot;
-                    break;
-
-                case "foreArm.l":
-                    lForeArmRb = r;
-                    iLeftForeArmRotation = rot;
-                    break;
-
-                case "foreArm.r":
-                    rForeArmRb = r;
-                    iRightForeArmRotation = rot;
-                    break;
-
-                case "hand.l":
-                    lHandRb = r;
-                    iLeftHandRotation = rot;
-                    break;
-
-                case "hand.r":
-                    rHandRb = r;
-                    iRightHandRotation = rot;
-                    break;
-
-                case "leg.l":
-                    lLegRb = r;
-                    iLeftLegRotation = rot;
-                    break;
-
-                case "leg.r":
-                    rLegRb = r;
-                    iRightLegRotation = rot;
-                    break;
-
-                case "shin.l":
-                    lShinRb = r;
-                    iLeftShinRotation = rot;
-                    break;
-
-                case "shin.r":
-                    rShinRb = r;
-                    iRightShinRotation = rot;
-                    break;
-
-                case "foot.l":
-                    lFootRb = r;
-                    iLeftFootRotation = rot;
-                    break;
-
-                case "foot.r":
-                    rFootRb = r;
-                    iRightFootRotation = rot;
-                    break;
-                    
-                default:
-                    break;
-            }
-            
-
-        }
-        */
-
-
+		gc = FindObjectOfType<GameController> ();
     }
 
     public void releaseME()
@@ -168,26 +70,40 @@ public class ManController : MonoBehaviour {
         Destroy(rightLegHinge);
         Destroy(hipHinge);
 
+
+
         this.factor = 0.9f;
 
         foreach (Pair p in rbs)
         {
+			BoxCollider b = p.rb.gameObject.GetComponent<BoxCollider> ();
+			if (b != null) {
+				b.enabled = (true);
+			}
+			//p.rb.maxDepenetrationVelocity = 0.000001f;
+			//p.rb.maxAngularVelocity = 1;
+			p.rb.drag = 0.2f;
+			//p.rb.mass = 5;
+			//p.rb.angularDrag = 1000;
+			p.rb.useGravity = true;
+			//p.rb.AddExplosionForce (5000,new Vector3 (-1,0,0), 10);
             if (!p.rb.gameObject.name.Equals("Armature") && !p.rb.gameObject.name.Equals("Hips"))
             {
                 JointSpring j = new JointSpring();
                 j.spring = 10;
                 p.rb.gameObject.GetComponent<HingeJoint>().spring = j;
             }
-            p.rb.AddForce(new Vector3(-2000, 1020, 0));
+			p.rb.AddForce(new Vector3(-5500, 150, p.rb.velocity.z/5));
         }
-
     }
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		foreach(Pair p in rbs)
-        {
-            updateBodyPart(p);
-        }
+		if (SceneManager.GetActiveScene () == SceneManager.GetSceneByBuildIndex (0) || !gc.lost) {
+			foreach(Pair p in rbs)
+	        {
+	            updateBodyPart(p);
+	        }
+		}
 	}
 }

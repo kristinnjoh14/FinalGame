@@ -96,12 +96,12 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 124
-  m_CollisionDetection: 2
+  m_CollisionDetection: 0
 --- !u!114 &114072633644952600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -116,6 +116,7 @@ MonoBehaviour:
   acceleration: 0
   speed: 0
   obstacleScript: {fileID: 0}
+  player: {fileID: 0}
 --- !u!136 &136617794145528282
 CapsuleCollider:
   m_ObjectHideFlags: 1

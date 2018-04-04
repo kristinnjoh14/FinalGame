@@ -11,6 +11,7 @@ public class SkierMovement : MonoBehaviour {
 	public float maxSpeed;
 	public float maxBodyTilt;
 	public float boardTiltFactor;
+	private bool disableInput = false;
 
 	//public float maxSpeedDiff;		//Maximum difference between "current" scrollspeed and actual scrollspeed (Current keeps being incremented)
 	public bool onGround;
@@ -99,12 +100,7 @@ public class SkierMovement : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
-		maxSpeed = pc.scrollSpeed;
-        bool isInput = false;
-		float tiltX = Mathf.Clamp(gc.inputSensitivity.value*gc.AdjustedAccelerometer.x, -1, 1);
-		//float tiltZ = gc.AdjustedAccelerometer.z;
-
+	void FixedUpdate () {
 		//Tree stuff if not paused
 		if (!gc.lost && !gc.settingsContainer.activeSelf)
         {
@@ -147,29 +143,40 @@ public class SkierMovement : MonoBehaviour {
             /* <!-- ABOVE IS THE PART WHERE THE TREE-DODGE SLOW MOTION EFFECT HAPPENS --> */
         }
 
-        float deltaVel = maxSpeed - rb.velocity.magnitude;
+		//Handle input and do movement
+		if (!disableInput) {
+			input ();
+		}
+	}
+
+	public void input () {
+		maxSpeed = pc.scrollSpeed;
+		bool isInput = false;
+		float tiltX = Mathf.Clamp(gc.inputSensitivity.value*gc.AdjustedAccelerometer.x, -1, 1);
+		//float tiltZ = gc.AdjustedAccelerometer.z;
+		float deltaVel = maxSpeed - rb.velocity.magnitude;
 		if (Time.timeScale > 0) {	//All input
 			//Dev buttons for testing in editor
 			if (Application.isEditor) {	
-	            if (Input.GetKey (KeyCode.A) || ( gc.LeftButtonPressed && !gc.useTiltControls ) ) {
-	                addZForceLeft(deltaVel);
-	                isInput = true;
+				if (Input.GetKey (KeyCode.A) || ( gc.LeftButtonPressed && !gc.useTiltControls ) ) {
+					addZForceLeft(deltaVel);
+					isInput = true;
 					bodyTilt -= Time.deltaTime * 100;
 				} else if (Input.GetKey (KeyCode.D) || (gc.RightButtonPressed && !gc.useTiltControls) ) {
-	                addZForceRight(deltaVel);
-	                isInput = true;
+					addZForceRight(deltaVel);
+					isInput = true;
 					bodyTilt += Time.deltaTime * 100;
-	            }
+				}
 			} else {
 				//Actual device controls
-	            if (gc.useTiltControls) {		
+				if (gc.useTiltControls) {		
 					//Tilt controls
 					if ((rb.velocity.z > 0 && tiltX < 0) || (rb.velocity.z < 0 && tiltX > 0)) {	//If movement is opposite velocity, force is greater proportional to how fast you are going
 						sm.hardTurnSound (deltaVel / maxSpeed);
 					}
 					bodyTilt += Time.deltaTime * 100 * tiltX;
 					rb.AddForce(0, 0, tiltX * speed * deltaVel);
-	            } else {
+				} else {
 					//Tap controls
 					if (gc.LeftButtonPressed) {
 						addZForceLeft (deltaVel);
@@ -180,8 +187,8 @@ public class SkierMovement : MonoBehaviour {
 						isInput = true;
 						bodyTilt += Time.deltaTime * 100;
 					}
-	            }
-	        }
+				}
+			}
 		}
 		if (!gc.settingsContainer.activeSelf) {
 			bodyTilt -= 0.09f * bodyTilt;
@@ -197,7 +204,21 @@ public class SkierMovement : MonoBehaviour {
 
     public void treeCollision()
     {
-        manController.releaseME();
-        pc.stopEverything();
-    }
+		if(!gc.lost) {
+			gc.showResetStuff ();
+			gc.lost = true;
+			manController.releaseME();
+			pc.stopEverything();
+			disableInput = true;
+
+			rb.velocity = Vector3.zero;
+			rb.maxAngularVelocity = 0.5f;
+			rb.maxDepenetrationVelocity = 0.0000001f;
+
+			CameraController cc = GameObject.FindObjectOfType<CameraController> ();
+			if(cc != null){
+				cc.VigourousShake (1f, 2f);
+			}
+		}
+	}
 }

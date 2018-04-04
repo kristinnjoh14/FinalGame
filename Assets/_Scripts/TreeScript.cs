@@ -27,6 +27,8 @@ public class TreeScript : MonoBehaviour {
         if (collision.gameObject.tag.Equals("model"))
         {
             player.treeCollision();
+			Time.timeScale = 0.65f;
+			Time.fixedDeltaTime = Time.timeScale * 0.01f;
         }
         //Debug.Log(collision.gameObject.tag);
     }

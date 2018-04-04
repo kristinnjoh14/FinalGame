@@ -16,6 +16,7 @@ public class MainMenuController : MonoBehaviour {
 	private Vector3 orientation = Vector3.zero;
 	// Use this for initialization
 	void Start () {
+		Application.targetFrameRate = 60;
 		dc = FindObjectOfType<DataController> ();
 		dc.loadSave ();
 		dc.loadSettings ();
@@ -30,8 +31,8 @@ public class MainMenuController : MonoBehaviour {
 
 	void initScores () {
 		scoreSheet = GameObject.FindGameObjectWithTag ("ScoreSheet").GetComponent<TextMeshProUGUI> ();
-		scoreSheet.text += dc.save.highScore.ToString () + "\nLongest run: ";
 		scoreSheet.text += dc.save.longestRun.ToString () + "\n\nTotal number of runs: ";
+		//scoreSheet.text += dc.save.longestRun.ToString () + "\n\nTotal number of runs: ";
 		scoreSheet.text += dc.save.numberOfRuns;
 		GameObject.FindGameObjectWithTag ("StatsContainer").SetActive (false);
 	}
@@ -42,7 +43,7 @@ public class MainMenuController : MonoBehaviour {
 		if (dc.settings.accelerometerSensitivity != 0) {
 			sensitivitySlider.value = dc.settings.accelerometerSensitivity;
 		}
-		useTiltToggle.isOn = dc.settings.useTilt;
+		useTiltToggle.isOn = !dc.settings.useTilt;
 		GameObject.FindGameObjectWithTag ("SettingsContainer").SetActive (false);
 	}
 

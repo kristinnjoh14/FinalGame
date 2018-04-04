@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
     public float score = 0;
 
     public bool useTiltControls = true;
+	private bool useTiltControlsTmp = true;
 
     public bool LeftButtonPressed;
     public bool RightButtonPressed;
@@ -27,9 +28,22 @@ public class GameController : MonoBehaviour {
 
 	private DataController dc;
 	private static GameController instance;
+	private float initialFixedUpdate;
+	private Toggle useTap;
+	/*void Awake() {
+		Application.targetFrameRate = 60;
+		if (instance == null) {
+			instance = this;
+		} else {
+			DestroyObject (gameObject);
+		}
+		DontDestroyOnLoad (this);
+	}*/
 
 	// Use this for initializatin
 	void Start() {
+		initialFixedUpdate = Time.fixedDeltaTime;
+		Application.targetFrameRate = 60;
 		//Load settings
 		dc = FindObjectOfType<DataController> ();
 		dc.loadSettings ();
@@ -42,35 +56,50 @@ public class GameController : MonoBehaviour {
 		scoreBoard = GameObject.FindGameObjectWithTag("ScoreCounter").GetComponent<Text>();
 		cogWheelClicked ();
 		settingsContainer = GameObject.FindGameObjectWithTag ("SettingsContainer");
+		useTap = GameObject.FindGameObjectWithTag ("UseTiltToggle").GetComponent<Toggle> ();
+		useTap.isOn = !useTiltControls;
 		outsideOfSettingsMenuClicked ();
 	}
 
 	// Update is called once per frame
 	void Update () {
-		score += Time.deltaTime;
+		if (!lost) {
+			score += Time.deltaTime;
+		}
         if (scoreBoard != null)
         {
             scoreBoard.text = score.ToString("F2");
         }
-		if (Time.timeScale == 0  && lost) {
-			FindObjectOfType <ObstacleScript> ().enabled = false;
-            if (dc != null)
-            {
-                if (dc.newScore((int)score, score))
-                {
-                    scoreBoard.text = "New high score!\n" + score.ToString("F2");
-                }
-            }
+	}
 
-			if (Input.GetKeyDown (KeyCode.Space) || Input.touchCount != 0) {
-				Time.timeScale = 1;
-				GameObject.FindGameObjectWithTag ("RetryScreen").GetComponent<Text> ().text = "";
-				score = 0;
-				Time.fixedDeltaTime = 0.01f;
-				SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+	public void GoToMainMenu(){
+		Time.timeScale = 1;
+		SceneManager.LoadScene (0);
+	}
+
+	public void ResetGame(){
+		Time.timeScale = 1;
+		//GameObject.FindGameObjectWithTag ("RetryScreen").GetComponent<Text> ().text = "";
+		score = 0;
+		Time.fixedDeltaTime = initialFixedUpdate;
+		SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+	}
+
+	public GameObject retryPanel, mainMenuPanel;
+
+	public void showResetStuff(){
+		retryPanel.SetActive (true);
+		mainMenuPanel.SetActive (true);
+		FindObjectOfType <ObstacleScript> ().enabled = false;
+		if (dc != null)
+		{
+			if (dc.newScore((int)score, score))
+			{
+				scoreBoard.text = "New high score!\n" + score.ToString("F2");
 			}
 		}
 	}
+
 
     /// <summary>
     /// events for the button presses.???
@@ -116,19 +145,10 @@ public class GameController : MonoBehaviour {
     /// <param name="value"></param>
     public void setUseButtonControls(bool value)
     {
-        useTiltControls = !value;
+        useTiltControlsTmp = !value;
     }
 
     private Text scoreBoard;
-    void Awake() {
-        Application.targetFrameRate = 60;
-		if (instance == null) {
-			instance = this;
-		} else {
-			DestroyObject (gameObject);
-		}
-		DontDestroyOnLoad (this);
-    }
 
 	//Credit to user Polymorphik for his reply on thread in following link as accessed @17:00PM 23/03/2018
 	//https://forum.unity.com/threads/input-acceleration-calibration.317121/
@@ -162,6 +182,7 @@ public class GameController : MonoBehaviour {
 
 	public void saveSettings () {
 		Calibrate ();
+		useTiltControls = useTiltControlsTmp;
 		dc.settings.accelerometerSensitivity = inputSensitivity.value;
 		dc.settings.useTilt = useTiltControls;
 		dc.saveSettings ();

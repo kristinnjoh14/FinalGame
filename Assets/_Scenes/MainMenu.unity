@@ -723,8 +723,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39e118cc9f619459fa10192badeddc68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollSpeed: 65
-  acceleration: 0.7
+  scrollSpeed: 75
+  acceleration: 3.5
   planes:
   - {fileID: 671253829}
   - {fileID: 1967956486}
@@ -5655,7 +5655,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4299941218153458, guid: 187541860319fa54b887906e1a485056, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.2
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 4299941218153458, guid: 187541860319fa54b887906e1a485056, type: 2}
       propertyPath: m_LocalPosition.z
@@ -5706,7 +5706,10 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114066290016190240, guid: 187541860319fa54b887906e1a485056, type: 2}
+    - {fileID: 82235330179676842, guid: 187541860319fa54b887906e1a485056, type: 2}
+    - {fileID: 114794995928738886, guid: 187541860319fa54b887906e1a485056, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 187541860319fa54b887906e1a485056, type: 2}
   m_IsPrefabParent: 0
 --- !u!54 &1063463867 stripped
@@ -5743,11 +5746,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnRate: 0.02
   spawnOffset: 260
+  minSpawnRate: 0.001
   TreePoolSize: 250
   trees:
   - {fileID: 1000011914158716, guid: 78af3a7aad589fa49b8fb946c9e57362, type: 2}
   - {fileID: 1000011147454354, guid: 01d2dd5255c308a4db25dbb77d9f65ea, type: 2}
   - {fileID: 1000012936420096, guid: a6dbabfd6d3c8cb47b7243b0b8723af2, type: 2}
+  spawnRateByTime: 2
   availableTrees: []
   pc: {fileID: 249091120}
 --- !u!4 &1157060736
@@ -7734,7 +7739,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4035500555304310, guid: e36107dca152a184db4c61c7550fb2bb, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.057
+      value: 0.019999996
       objectReference: {fileID: 0}
     - target: {fileID: 4035500555304310, guid: e36107dca152a184db4c61c7550fb2bb, type: 2}
       propertyPath: m_LocalPosition.z

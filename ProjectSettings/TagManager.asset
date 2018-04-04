@@ -14,6 +14,7 @@ TagManager:
   - SensitivitySlider
   - UseTiltToggle
   - model
+  - ground
   layers:
   - Default
   - TransparentFX

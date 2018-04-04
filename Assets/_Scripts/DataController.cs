@@ -39,7 +39,7 @@ public class DataController : MonoBehaviour {
 			save.numberOfRuns = PlayerPrefs.GetInt ("RunCount");
 		}
 		if (PlayerPrefs.HasKey ("LongestRun")) {
-			save.longestRun = PlayerPrefs.GetInt ("LongestRun");
+			save.longestRun = PlayerPrefs.GetFloat ("LongestRun");
 		}
 	}
 

@@ -5,10 +5,11 @@ using UnityEngine;
 public class ObstacleScript : MonoBehaviour {
 	public float spawnRate;
 	public float spawnOffset;
+	public float minSpawnRate = 0.001f;
     public int TreePoolSize = 100;
 	public GameObject[] trees = new GameObject[3];
     //public List<Transform> trees = new List<Transform> ();
-    
+	public float spawnRateByTime = 2f;
     public List<GameObject> availableTrees;
     public PlaneController pc;
 	//private float planeSpeed;
@@ -40,26 +41,33 @@ public class ObstacleScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (this.spawnRate > minSpawnRate) {
+			this.spawnRate -= spawnRateByTime * Time.deltaTime;
+		} else {
+			this.spawnRate = minSpawnRate;
+		}
 		//planeSpeed = GetComponentInParent<PlaneController> ().scrollSpeed;
 		spawnCountdown -= Time.deltaTime;
 		if (spawnCountdown < 0) {	//Once countdown reaches 0, spawn a tree at a random offset from the player
 			
 
             if(availableTrees.Count != 0)
-
             {
+				int t = Random.Range(1, Mathf.Min(5, availableTrees.Count));
                 //get first tree in list.
-                GameObject tree = availableTrees[0];
-                //remove tree from list.
-                availableTrees.RemoveAt(0);
-                // set the transform
-                tree.transform.position = new Vector3(-spawnOffset, 0, player.transform.position.z - Zrange + Random.value * 2 * Zrange);
-                //set the tree as a 
-                tree.transform.SetParent(pc.activePlane.transform);
-                //enable the tree
-                tree.SetActive(true);
+				for (int i = 0; i < t; i++) {
+					GameObject tree = availableTrees [0];
+					//remove tree from list.
+					availableTrees.RemoveAt (0);
+					// set the transform
+					tree.transform.position = new Vector3 (-spawnOffset - Random.value * 20f, 0, player.transform.position.z - Zrange + Random.value * 2 * Zrange);
+					//set the tree as a 
+					tree.transform.SetParent (pc.activePlane.transform);
+					//enable the tree
+					tree.SetActive (true);
 
-                spawnCountdown = spawnRate;
+					spawnCountdown = spawnRate;
+				}
 
             }
 
